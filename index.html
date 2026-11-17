@@ -58,6 +58,10 @@ button:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{
 .status{height:34px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:.75rem;font-weight:700}
 .topbar{flex:none;display:flex;justify-content:space-between;align-items:center;padding:4px 18px 10px}
 .brand{font-family:var(--display);font-size:1.02rem}
+.brandbtn{background:none;border:0;padding:4px 0;display:flex;align-items:center;gap:6px;color:inherit}
+.brandbtn svg{color:var(--deep)}
+.estacao{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;margin:-4px 0 18px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--chip);text-decoration:none;color:var(--ink);font-size:.9rem}
+.estacao b{color:var(--deep)}
 .helpbtn{background:var(--help-soft);color:var(--help);border:0;border-radius:999px;padding:6px 12px;font-weight:700;font-size:.8rem;display:flex;gap:6px;align-items:center}
 .langbtn{background:var(--chip);color:var(--ink);border:0;border-radius:999px;padding:6px 10px;font-weight:700;font-size:.75rem;display:flex;gap:5px;align-items:center}
 .helpbtn .dot{width:8px;height:8px;border-radius:50%;background:var(--help)}
@@ -368,7 +372,7 @@ html,body{overscroll-behavior:none}
     <div class="screen" id="screen">
       <div class="status"><span>9:41</span><span>●●● 100%</span></div>
       <div class="topbar" id="topbar">
-        <span class="brand">Faça Valer a Pena</span>
+        <button class="brand brandbtn" data-go="welcome" aria-label="Voltar ao início"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg>Faça Valer a Pena</button>
         <span style="display:flex;gap:6px;align-items:center"><button class="langbtn" id="langTop" aria-label="Idioma"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span id="langCode">PT</span></button><button class="helpbtn" id="helpTop" aria-label="Preciso de ajuda agora"><span class="dot"></span>Ajuda</button></span>
       </div>
       <div class="view" id="view"></div>
@@ -545,7 +549,7 @@ const R={
    <div class="who">${P.ref}</div>
    <details class="ponte"><summary style="cursor:pointer;font-weight:700">Saiba mais</summary><p style="margin:6px 0 0">${P.ctx}</p><p style="margin:8px 0 0;font-size:.85em;opacity:.8">Provérbios tem 31 capítulos; por isso muitos leem um por dia do mês.</p></details>
    <button type="button" id="copyWord">Copiar a palavra</button></section>
-  <p class="small" style="margin:-8px 0 16px">${S?`Sua estação: ${S.n} · <a href="#" data-go="season" style="color:var(--deep);font-weight:700">Trocar</a>`:`<a href="#" data-go="season" style="color:var(--deep);font-weight:700">Em que estação você está?</a>`}</p>
+  <a href="#" class="estacao" data-go="season">${S?`<span>Sua estação: <b>${S.n}</b></span><b>Trocar ›</b>`:`<span>Em que estação você está?</span><b>Escolher ›</b>`}</a>
   <h3 class="t">Como você está agora?</h3><p class="sub">Sem resposta certa. Escolha o que mais se parece com hoje.</p>
   <div class="moods">${moods.map(([f,l])=>`<button class="mood" data-mood="${l}" aria-pressed="${state.mood===l}"><span class="f" aria-hidden="true">${f}</span>${l}</button>`).join('')}</div>
   <div id="after"></div>

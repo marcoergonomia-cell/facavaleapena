@@ -1,5 +1,5 @@
-// versão ae079bd5cf: sempre busca a versão nova; sem internet, usa a guardada
-const C='fvp-ae079bd5cf';
+// versão 6ba1af0aaf: sempre busca a versão nova; sem internet, usa a guardada
+const C='fvp-6ba1af0aaf';
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(['./','index.html','manifest.webmanifest'])))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==C).map(n=>caches.delete(n)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;
