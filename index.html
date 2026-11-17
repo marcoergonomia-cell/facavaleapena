@@ -84,7 +84,7 @@ h3.t{font-family:var(--display);font-weight:400;font-size:1.45rem;line-height:1.
   linear-gradient(180deg,var(--chip),var(--paper));position:relative;overflow:hidden}
 .sun::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;background:var(--deep);border-radius:60% 60% 0 0/40% 40% 0 0}
 .rings{width:100%;aspect-ratio:2.4;border-radius:20px;background:var(--chip);display:grid;place-items:center;padding:14px}
-.rings.photo{padding:0;background:none;aspect-ratio:auto;height:205px;display:block}
+.rings.photo{padding:12px 8px 0;background:none;aspect-ratio:auto;height:190px;display:block}
 .rings.photo img{width:100%;height:100%;object-fit:contain;object-position:50% 50%;filter:drop-shadow(0 14px 18px rgba(80,60,20,.18));display:block}
 .motto{font-family:var(--display);font-size:1.5rem;line-height:1.25;margin:18px 0 8px}
 .motto span{display:block}
@@ -507,7 +507,7 @@ const R={
  welcome(){
   const CU=curioMsg();
   view.innerHTML=`<div class="welcome">
-   <div><div class="rings photo"><img src="aliancas-recorte.png" alt="Duas alianças de ouro"></div>
+   <div><div class="rings photo"><img src="aliancas-entrelacadas.png" alt="Duas alianças entrelaçadas, uma prata e uma dourada"></div>
    <div style="width:44px;height:2px;background:var(--dawn);margin:10px 0 8px;border-radius:2px"></div><div class="steplabel" style="color:var(--dawn)">40 dias de jornada a dois · Comece por você</div>
    <p class="motto" style="margin-top:6px"><span>Amar é uma decisão.</span></p>
    <p style="margin:0 0 12px;color:var(--soft)">Faça valer a pena a vida que lhe foi confiada.</p>
