@@ -66,7 +66,7 @@ button:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{
 .langbtn{background:var(--chip);color:var(--ink);border:0;border-radius:999px;padding:6px 10px;font-weight:700;font-size:.75rem;display:flex;gap:5px;align-items:center}
 .helpbtn .dot{width:8px;height:8px;border-radius:50%;background:var(--help)}
 .view{flex:1;overflow-y:auto;padding:4px 20px 20px;min-height:0}
-.tabs{flex:none;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);padding:8px 6px 18px;background:var(--paper)}
+.tabs{flex:none;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);padding:8px 6px 18px;background:var(--paper)}
 .tabs[hidden]{display:none}
 .tabs button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.7rem;color:var(--soft);padding:4px 0}
 .tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -378,6 +378,7 @@ html,body{overscroll-behavior:none}
       <div class="view" id="view"></div>
       <div id="composerSlot"></div>
       <nav class="tabs" id="tabs" aria-label="Menu do app">
+        <button data-go="welcome"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg>Início</button>
         <button data-go="checkin"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8M9 9.5h.01M15 9.5h.01"/></svg>Hoje</button>
         <button data-go="chat"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Dúvidas</button>
         <button data-go="journey"><svg viewBox="0 0 24 24"><path d="M5 20c2-6 5-4 7-9s4-6 7-7"/><circle cx="5" cy="20" r="1.5"/><circle cx="19" cy="4" r="1.5"/></svg>Jornada</button>
