@@ -526,7 +526,7 @@ const R={
    <h3 class="t" style="text-align:center;font-size:1.3rem;margin:24px 0 4px">Por onde você quer começar?</h3>
    <p class="sub" style="text-align:center;margin:0 0 16px">Escolha pelo seu momento. Dá para trocar depois.</p>
    <div style="display:grid;gap:12px">
-    <button class="season trilha" data-go="start" data-trilha="cas" aria-pressed="${tget()==='cas'}"><span class="ti"><img src="aliancas-entrelacadas.png" alt="" style="width:80px"></span><span class="tx"><b>Meu casamento</b><span class="tk">40 dias de jornada a dois</span><span class="small">Para cuidar do casamento, a dois ou começando por você.</span></span></button>
+    <button class="season trilha" data-go="start" data-trilha="cas" aria-pressed="${tget()==='cas'}"><span class="ti"><img src="aliancas-entrelacadas.png" alt="" style="width:80px"></span><span class="tx"><b>Casamento</b><span class="tk">40 dias de jornada a dois</span><span class="small">Para cuidar do casamento, a dois ou começando por você.</span></span></button>
     <button class="season trilha" data-go="start" data-trilha="id" aria-pressed="${tget()==='id'}"><span class="ti"><img src="broto.svg" alt="" style="width:84px"></span><span class="tx"><b>Quem eu sou</b><span class="tk">Eu não sou um acidente</span><span class="small">Você foi criado de propósito, para um propósito.</span><span class="small" style="font-style:italic;margin-top:2px">Estudo 1 aberto · mais estudos em breve</span></span></button>
    </div>
    <p class="small" style="text-align:center;margin-top:16px">Não existe escolha errada.</p>
@@ -599,7 +599,7 @@ const R={
   const casNotes=[1,2,3,4,5].map(x=>[x,dget('c1d'+x)]).filter(x=>x[1].trim());
   const open=d===1?'data-go="encounter" data-track="cas" data-enc="0"':`data-go="day" data-day="${d}"`;
   const ETS=[['A ideia foi de Deus','Gênesis 2.18-24'],...CICLOS];
-  view.innerHTML=`${troca('Meu casamento')}<h3 class="t">Minha jornada</h3>
+  view.innerHTML=`${troca('Casamento')}<h3 class="t">Minha jornada</h3>
   <div class="today"><div class="k">Hoje</div><div class="big">Dia ${d} <span>de 40</span></div><p>${DN[d]}</p><div class="thin" aria-label="Dia ${d} de 40"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin:6px 0 12px">Dia ${d} de 40 · Etapa 1 · Dias 1 a 5</div><button class="btn" ${open}>Abrir o dia de hoje</button></div>
   <section class="word" aria-label="Palavra do dia da jornada"><div class="k">Palavra do dia · Dia ${d} de 40</div><p class="q">${PW.q}</p><div class="who">${PW.ref}</div><p class="ponte">${PW.ctx}</p></section>
   <div class="stack">
