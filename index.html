@@ -399,6 +399,7 @@ const view = $('#view'), tabs = $('#tabs'), screen = $('#screen'), slot = $('#co
 
 const WHY = {
   welcome:{n:'1 · Boas-vindas',h:'Entrada sem cadastro',p:'Acolher em 10 segundos e deixar claro o que o app é e o que não é.',c:'Frase-mestra, três promessas simples e um aviso honesto. Um botão só: "Começar".',i:'Fase 1 não pede nome, e-mail nem senha. Nada é guardado.',j:'A pessoa entra sem medo de ser julgada ou exposta.'},
+  portal:{n:'1a · Portal da jornada',h:'Uma tela de impacto ao escolher a jornada',p:'Escolher a porta precisa ter peso.',c:'Casamento: alianças e "Amar é uma decisão." Quem eu sou: broto e "Você não é um acidente." Aparece só na primeira vez de cada jornada.'},
   season:{n:'1b · Estação',h:'Em que estação da vida você está?',p:'Cada pessoa vive um momento diferente: casada junto, casada sozinha ou separada. O app não deve supor qual é.',c:'A pessoa escolhe entre inverno, primavera, verão e outono. A escolha muda as cores do app e mostra uma mensagem de encorajamento da estação, que também fica na tela Hoje. A cada dia aparece uma mensagem diferente (7 por estação, em rodízio guardado no celular). O banco mistura versículos (com contexto) e frases, sempre sem prometer resultado. Fica salva só no celular e pode ser trocada a qualquer momento.',i:'Inverno é frio, mas com abrigo, nunca escuro. Outono é maturidade e colheita, nunca fim.',j:'Base: Eclesiastes 3.1, para tudo há uma ocasião.'},
   seasonmsg:{n:'1c · Mensagem da estação',h:'Uma palavra para este tempo',p:'Quem escolhe uma estação precisa sentir que foi ouvido.',c:'Logo depois da escolha aparece uma mensagem de encorajamento daquela estação. A cada dia, uma diferente: 7 por estação no piloto, em rodízio guardado só no celular.',i:'Versículos com contexto em Saiba mais; citações só com autoria confiável ou marcadas como atribuídas. Nada promete resultado.',j:'A mesma mensagem fica na tela Hoje.'},
   checkin:{n:'2 · Hoje',h:'Palavra do dia e check-in',p:'A pessoa abre o app e precisa se sentir acolhida antes de qualquer tarefa.',c:'Abre com a palavra de sabedoria de hoje: um versículo de Provérbios do capítulo igual ao dia do mês (31 capítulos), com contexto em "Saiba mais". A palavra do dia da trilha fica em Minha jornada. Logo abaixo, a pessoa diz como está e o app sugere o próximo passo.',i:'Uma opção leva direto ao cuidado de crise, sem perguntas a mais.',j:'Ensina a pessoa a olhar para dentro antes de agir.'},
@@ -433,7 +434,7 @@ function go(k){
   closeOverlays();
   {const fx=document.querySelector('.fxall');if(fx&&k!=='seasonmsg'){fx.classList.add('out');setTimeout(()=>fx.remove(),1000)}}
   slot.innerHTML='';
-  const full = k==='welcome'||k==='season'||k==='seasonmsg';
+  const full = k==='welcome'||k==='season'||k==='seasonmsg'||k==='portal';
   tabs.hidden = full; $('#topbar').style.visibility = full?'hidden':'visible';
   [...tabs.children].forEach(b=>b.setAttribute('aria-current', b.dataset.go===k || ((k==='encounter'||k==='day'||k==='etapa')&&b.dataset.go==='journey')));
   renderWhy(k);
@@ -450,7 +451,7 @@ const SEASONS={
 };
 const tget=()=>{try{return localStorage.getItem('fvp-trilha')||''}catch(e){return ''}};
 const tset=v=>{try{localStorage.setItem('fvp-trilha',v)}catch(e){}};
-document.addEventListener('click',e=>{const t=e.target.closest('[data-trilha]');if(t)tset(t.dataset.trilha)},true);
+document.addEventListener('click',e=>{const t=e.target.closest('[data-trilha]');if(t)tset(t.dataset.trilha);const o=e.target.closest('[data-portal-ok]');if(o){try{localStorage.setItem('fvp-portal-'+tget(),'1')}catch(x){}}},true);
 const sget=()=>{try{return localStorage.getItem('fvp-estacao')||''}catch(e){return ''}};
 const sset=v=>{try{localStorage.setItem('fvp-estacao',v)}catch(e){}};
 const today=()=>new Date().toISOString().slice(0,10);
@@ -532,6 +533,19 @@ const R={
    <p class="small" style="text-align:center;margin-top:16px">Não existe escolha errada.</p>
    <button class="btn ghost" data-go="mentor" style="border:0;padding:6px;font-weight:600;font-size:.85rem;width:100%;margin-top:8px">Quem é o Mentor?</button>
    <p class="small" style="text-align:center;margin:10px 0 0">Este app não substitui psicólogo, psiquiatra ou atendimento médico. Em perigo, ligue 192.</p></div>`;
+ },
+ portal(){
+  const id=tget()==='id';
+  const P=id?{img:'<img src="broto.svg" alt="" style="width:190px">',k:'Quem eu sou · Jornada da identidade',big:'Você não é um acidente.',l:['Antes de qualquer rótulo, existe uma pergunta: quem você é?','Uma caminhada para olhar a própria história com calma.'],v:'"Eu te louvo porque me fizeste de modo especial e admirável."',r:'Salmos 139.14 (NVI)'}
+   :{img:'<img src="aliancas-entrelacadas.png" alt="" style="width:270px;max-width:100%">',k:'Casamento · 40 dias de jornada a dois',big:'Amar é uma decisão.',l:['Casamento não é só um sentimento. É uma aliança que se escolhe de novo, dia após dia.'],v:'"Um cordão de três dobras não se rompe com facilidade."',r:'Eclesiastes 4.12 (NVI)'};
+  view.innerHTML=`<div style="min-height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:26px 4px 18px">
+   <div><div style="display:grid;place-items:center;height:210px">${P.img}</div>
+   <div style="width:44px;height:2px;background:var(--dawn);margin:6px 0 10px;border-radius:2px"></div>
+   <div class="steplabel">${P.k}</div>
+   <p style="font-family:var(--display);font-size:2.1rem;line-height:1.1;margin:8px 0 12px">${P.big}</p>
+   ${P.l.map(x=>`<p style="margin:0 0 8px;color:var(--soft)">${x}</p>`).join('')}
+   <div style="border-left:3px solid var(--dawn);padding:2px 0 2px 12px;margin:14px 0 0"><p style="font-family:var(--display);margin:0;font-size:1.02rem">${P.v}</p><div class="small" style="margin-top:4px">${P.r}</div></div></div>
+   <div style="margin-top:20px"><button class="btn" data-go="start" data-portal-ok="1">Começar a jornada</button><button class="btn ghost" data-go="welcome" style="border:0;margin-top:6px;width:100%;font-weight:600">‹ Voltar</button></div></div>`;
  },
  season(){
   const cur=sget();
@@ -807,7 +821,7 @@ function closeOverlays(){['#crisis','#sb'].forEach(s=>{const e=$(s);if(e)e.remov
 
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g||g.getAttribute('aria-disabled')==='true')return;
   let k=g.dataset.go;
-  if(k==='start')k=sget()?'checkin':'season';
+  if(k==='start'){const t=tget();let ps='';try{ps=localStorage.getItem('fvp-portal-'+t)||''}catch(e){}k=(t&&!ps&&!g.dataset.portalOk)?'portal':(sget()?'checkin':'season');}
   if(k==='encounter'){
    if(g.dataset.enc!=null){state.track=g.dataset.track||'cas';state.enc=+g.dataset.enc;state.step=0}
    else{state.track='cas';state.enc=0;if(state.step>=STEPS.length)state.step=0}
