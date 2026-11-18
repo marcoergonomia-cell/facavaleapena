@@ -183,6 +183,26 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .trilha .tx{display:grid;gap:3px;padding:14px 14px 14px 16px;align-content:center}
 .trilha .tx b{font-family:var(--display);font-weight:400;font-size:1.35rem;line-height:1.15;color:var(--ink)}
 .trilha .tk{font-weight:700;font-size:.82rem;color:var(--deep)}
+.filme{position:absolute;inset:0;z-index:40;background:#14120E;color:#F3EEE5;font-family:var(--display);overflow:hidden;transition:opacity 1.6s ease}
+.filme.sai{opacity:0}
+.filme .pular{position:absolute;top:16px;right:16px;background:none;border:1px solid rgba(243,238,229,.25);color:rgba(243,238,229,.75);border-radius:999px;padding:6px 14px;font:600 .8rem var(--body)}
+.filme .f{position:absolute;left:28px;right:28px;top:42%;transform:translateY(-50%);font-size:1.75rem;line-height:1.25;text-align:center;opacity:0;margin:0}
+.filme .f1{animation:fio 2.8s ease .4s forwards}
+.filme .f2{animation:fio 2.8s ease 3.3s forwards}
+@keyframes fio{0%{opacity:0;transform:translateY(-40%)}25%{opacity:1;transform:translateY(-50%)}78%{opacity:1}100%{opacity:0}}
+.filme .cena{position:absolute;left:0;right:0;top:30%;display:grid;place-items:center;opacity:0;animation:fin 1s ease 6.1s forwards}
+.filme .par{position:relative;width:260px;height:168px}
+.filme .par img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.filme .esq{clip-path:inset(0 50% 0 0);animation:esq 1.6s cubic-bezier(.2,.7,.2,1) 6.1s both}
+.filme .dir{clip-path:inset(0 0 0 50%);animation:dir 1.6s cubic-bezier(.2,.7,.2,1) 6.1s both}
+.filme .inteira{opacity:0;animation:fin .5s ease 7.6s forwards}
+@keyframes esq{from{transform:translateX(-70px)}to{transform:none}}
+@keyframes dir{from{transform:translateX(70px)}to{transform:none}}
+.filme .broto{width:170px;animation:nasce 2s ease-out 6.1s both}
+@keyframes nasce{0%{clip-path:inset(60% 0 0 0)}100%{clip-path:inset(0 0 0 0)}}
+.filme .bv{position:absolute;left:24px;right:24px;top:62%;text-align:center;font-size:1.45rem;opacity:0;margin:0;animation:fin 1.2s ease 8s forwards}
+.filme .bv small{display:block;font:700 .7rem var(--body);letter-spacing:.12em;text-transform:uppercase;color:#E8AE4C;margin-bottom:8px}
+@keyframes fin{to{opacity:1}}
 .cover{flex:none;width:58px;height:80px;border-radius:4px;background:linear-gradient(170deg,#FFFDF8,#F1E9DA);border:1px solid #E4D9C6;box-shadow:2px 3px 8px rgba(60,40,20,.18);color:#2A2722;font-family:var(--display);font-size:.5rem;line-height:1.1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;padding:5px 4px}
 .cover img{width:46px;height:auto;display:block}
 
@@ -430,8 +450,21 @@ const ENC=[
  ['Quando fui rejeitado','José, Gênesis 37–50'],['Chamado pelo nome','Isaías 43'],['Obra das mãos dele','Efésios 2'],
  ['Minha história não acabou','Filipenses 1'],['Eu não sou um acidente','Síntese e compromisso']];
 
+function filme(t){
+  let visto='';try{visto=localStorage.getItem('fvp-filme-'+t)||''}catch(e){}
+  if(visto||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  try{localStorage.setItem('fvp-filme-'+t,'1')}catch(e){}
+  const F={cas:{f1:'Toda história de amor começa com um sim.',f2:'E continua com uma decisão, todos os dias.',cena:'<div class="par"><img class="esq" src="aliancas-entrelacadas.png" alt=""><img class="dir" src="aliancas-entrelacadas.png" alt=""><img class="inteira" src="aliancas-entrelacadas.png" alt=""></div>',k:'Casamento',bv:'Bem-vindo à jornada a dois.'},
+   id:{f1:'Antes de qualquer rótulo, existe uma história.',f2:'E ela não começou por acaso.',cena:'<img class="broto" src="broto.svg" alt="">',k:'Quem eu sou',bv:'Bem-vindo à jornada de volta a você.'}}[t];
+  const el=document.createElement('div');el.className='filme';el.setAttribute('role','dialog');el.setAttribute('aria-label','Abertura da jornada');
+  el.innerHTML=`<button class="pular">Pular</button><p class="f f1">${F.f1}</p><p class="f f2">${F.f2}</p><div class="cena" aria-hidden="true">${F.cena}</div><p class="bv"><small>${F.k}</small>${F.bv}</p>`;
+  $('#screen').appendChild(el);
+  const fim=()=>{if(!el.isConnected)return;el.classList.add("sai");setTimeout(()=>el.remove(),1600)};
+  el.querySelector('.pular').onclick=fim;const tm=setTimeout(fim,10200);
+}
 function go(k){
   closeOverlays();
+  document.querySelectorAll('.filme').forEach(x=>x.remove());
   {const fx=document.querySelector('.fxall');if(fx&&k!=='seasonmsg'){fx.classList.add('out');setTimeout(()=>fx.remove(),1000)}}
   slot.innerHTML='';
   const full = k==='welcome'||k==='season'||k==='seasonmsg'||k==='portal';
@@ -546,6 +579,7 @@ const R={
    ${P.l.map(x=>`<p style="margin:0 0 8px;color:var(--soft)">${x}</p>`).join('')}
    <div style="border-left:3px solid var(--dawn);padding:2px 0 2px 12px;margin:14px 0 0"><p style="font-family:var(--display);margin:0;font-size:1.02rem">${P.v}</p><div class="small" style="margin-top:4px">${P.r}</div></div></div>
    <div style="margin-top:20px"><button class="btn" data-go="start" data-portal-ok="1">Começar a jornada</button><button class="btn ghost" data-go="welcome" style="border:0;margin-top:6px;width:100%;font-weight:600">‹ Voltar</button></div></div>`;
+  filme(id?'id':'cas');
  },
  season(){
   const cur=sget();
