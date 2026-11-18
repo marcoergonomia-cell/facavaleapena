@@ -178,6 +178,11 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .enc .tt{font-weight:600;font-size:.9rem}
 .enc .rf{font-size:.75rem;color:var(--soft)}
 .book{display:flex;gap:12px;align-items:center}
+.season.trilha{padding:0;overflow:hidden;grid-template-columns:100px 1fr;align-items:stretch;gap:0}
+.trilha .ti{min-height:124px;display:grid;place-items:center;background:var(--chip)}
+.trilha .tx{display:grid;gap:3px;padding:14px 14px 14px 16px;align-content:center}
+.trilha .tx b{font-family:var(--display);font-weight:400;font-size:1.35rem;line-height:1.15;color:var(--ink)}
+.trilha .tk{font-weight:700;font-size:.82rem;color:var(--deep)}
 .cover{flex:none;width:58px;height:80px;border-radius:4px;background:linear-gradient(170deg,#FFFDF8,#F1E9DA);border:1px solid #E4D9C6;box-shadow:2px 3px 8px rgba(60,40,20,.18);color:#2A2722;font-family:var(--display);font-size:.5rem;line-height:1.1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;padding:5px 4px}
 .cover img{width:46px;height:auto;display:block}
 
@@ -443,6 +448,9 @@ const SEASONS={
  verao:{"n":"Verão","d":"Um tempo quente, cheio de vida.","t":{"--ground":"#FBEBD2","--paper":"#FFF8EC","--line":"#F3D9B2","--chip":"#FCEBD0","--deep":"#1F5A4A","--dawn":"#C06A0E","--dawn-soft":"#FDE2B8","--title":"#A34A12"},"m":[{"q":"\"Ofereça a Deus em sacrifício a sua gratidão, cumpra os seus votos para com o Altíssimo.\"","ref":"Salmos 50.14 (NVI)","ctx":"Salmo de Asafe, um dos músicos do templo. Nos versículos anteriores, Deus diz que não precisa dos animais oferecidos, porque tudo já é dele. O que ele pede é gratidão e promessas cumpridas. Nos tempos bons, é fácil esquecer quem deu. A gratidão faz lembrar."},{"q":"\"Deem graças em todas as circunstâncias, pois esta é a vontade de Deus para vocês em Cristo Jesus.\"","ref":"1 Tessalonicenses 5.18 (NVI)","ctx":"Paulo escreve a uma igreja jovem em Tessalônica, que sofria oposição. A gratidão que ele pede não depende de tudo estar perfeito. É um jeito de olhar a vida reconhecendo o que Deus já deu."},{"q":"Faça valer a pena a vida que lhe foi confiada.","ref":"Do Mentor"},{"q":"\"Este é o dia em que o Senhor agiu; alegremo-nos e exultemos neste dia.\"","ref":"Salmos 118.24 (NVI)","ctx":"Cântico de festa cantado na entrada do templo, celebrando um livramento. A alegria aqui é resposta ao que Deus fez."},{"q":"\"Dediquem-se uns aos outros com amor fraternal. Prefiram dar honra aos outros mais do que a si próprios.\"","ref":"Romanos 12.10 (NVI)","ctx":"Paulo ensina a igreja de Roma a viver em comunidade. Honrar é dar valor ao outro de forma visível, antes de esperar recebê-lo."},{"q":"\"Acima de tudo, porém, revistam-se do amor, que é o elo perfeito.\"","ref":"Colossenses 3.14 (NVI)","ctx":"Paulo compara as virtudes a roupas que vestimos todos os dias. O amor é a peça que amarra todas as outras."},{"q":"\"A gratidão é a memória do coração.\"","ref":"Atribuída a Jean-Baptiste Massieu"}]},
  outono:{"n":"Outono","d":"Um tempo de maturidade e colheita.","t":{"--ground":"#EFDDC6","--paper":"#FAF0E2","--line":"#E6D0B2","--chip":"#F3E2CB","--deep":"#5A6B2F","--dawn":"#A85E19","--dawn-soft":"#F3D9B8","--title":"#8F3A18"},"m":[{"q":"\"Aqueles que semeiam com lágrimas, com cantos de alegria colherão.\"","ref":"Salmos 126.5 (NVI)","ctx":"Cântico cantado pelos peregrinos na subida a Jerusalém, lembrando a volta do exílio. Em tempos de pouca comida, a semente lançada na terra podia ser o pão daquele dia. Semear custava. A colheita vem para quem semeou."},{"q":"\"E não nos cansemos de fazer o bem, pois no tempo próprio colheremos, se não desanimarmos.\"","ref":"Gálatas 6.9 (NVI)","ctx":"Paulo escreve às igrejas da Galácia, numa região de lavoura. Ele usa a imagem do campo: quem planta não colhe no mesmo dia. O tempo da colheita pertence a Deus."},{"q":"Maturidade é continuar fazendo o bem, mesmo quando ninguém vê.","ref":"Do Mentor"},{"q":"\"Mesmo na velhice darão fruto, permanecerão viçosos e verdejantes.\"","ref":"Salmos 92.14 (NVI)","ctx":"Salmo cantado no sábado. Compara quem confia em Deus a palmeiras e cedros plantados no pátio do templo, árvores que vivem muito e continuam dando fruto."},{"q":"\"Estou convencido de que aquele que começou boa obra em vocês, vai completá-la até o dia de Cristo Jesus.\"","ref":"Filipenses 1.6 (NVI)","ctx":"Paulo escreve preso a uma igreja que amava. Ele confia que a obra começada por Deus não fica pela metade."},{"q":"\"Vejam como o agricultor aguarda que a terra produza a preciosa colheita e como espera com paciência até virem as chuvas do outono e da primavera.\"","ref":"Tiago 5.7 (NVI)","ctx":"Tiago escreve a cristãos espalhados e cansados de esperar. Em Israel, as chuvas do outono preparavam a terra e as da primavera completavam a colheita."},{"q":"\"Ele fez tudo apropriado ao seu tempo.\"","ref":"Eclesiastes 3.11 (NVI)","ctx":"Está no mesmo capítulo dos \"tempos\" (Ec 3.1-8): plantar e colher, chorar e rir. Depois de listar as fases da vida, o autor diz que cada uma tem o seu lugar. Nenhuma estação é desperdiçada diante de Deus."}]},
 };
+const tget=()=>{try{return localStorage.getItem('fvp-trilha')||''}catch(e){return ''}};
+const tset=v=>{try{localStorage.setItem('fvp-trilha',v)}catch(e){}};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-trilha]');if(t)tset(t.dataset.trilha)},true);
 const sget=()=>{try{return localStorage.getItem('fvp-estacao')||''}catch(e){return ''}};
 const sset=v=>{try{localStorage.setItem('fvp-estacao',v)}catch(e){}};
 const today=()=>new Date().toISOString().slice(0,10);
@@ -511,17 +519,19 @@ function hoje(){const F=feitos();for(let d=1;d<=5;d++)if(!F.includes(d))return d
 const DN=['','Estudo · A ideia foi de Deus','Palavra e desafio · Criados juntos','Palavra e desafio · Um presente','Palavra e desafio · Ele estava lá','Descanso · Como foi o desafio?'];
 const R={
  welcome(){
-  const CU=curioMsg();
-  view.innerHTML=`<div class="welcome">
-   <div><div class="rings photo"><img src="aliancas-entrelacadas.png" alt="Duas alianças entrelaçadas, uma prata e uma dourada"></div>
-   <div style="width:44px;height:2px;background:var(--dawn);margin:10px 0 8px;border-radius:2px"></div><div class="steplabel" style="color:var(--dawn)">40 dias de jornada a dois · Comece por você</div>
-   <p class="motto" style="margin-top:6px"><span>Amar é uma decisão.</span></p>
-   <p style="margin:0 0 12px;color:var(--soft)">Faça valer a pena a vida que lhe foi confiada.</p>
-   <ul class="promise"><li>Uma corrida a dois.</li><li>Um estudo curto, uma palavra por dia e um desafio possível.</li><li>Sem cadastro. O que você escreve fica só no seu celular.</li></ul></div>
-   <div class="stack"><button class="btn" data-go="start">Começar</button>
-   <button class="btn ghost" data-go="mentor" style="border:0;padding:6px;font-weight:600;font-size:.85rem">Quem é o Mentor?</button>
-   <div class="curio"><div class="lb">Você sabia?</div><p class="cq">${CU.q}</p><details><summary>Ver a resposta</summary><p>${CU.a}</p><p>${CU.b}</p></details><p class="cn">Uma curiosidade sobre o casamento a cada dia.</p></div>
-   <p class="small" style="text-align:center;margin:0">Este app não substitui psicólogo, psiquiatra ou atendimento médico. Em perigo, ligue 192.</p></div></div>`;
+  view.innerHTML=`<div style="padding:30px 2px 16px">
+   <img src="folha.png" alt="" style="width:72px;display:block;margin:0 auto">
+   <div style="font-family:var(--display);font-size:1.5rem;text-align:center;margin-top:8px">Faça Valer a Pena</div>
+   <p class="small" style="text-align:center;margin:6px 0 0;opacity:.85">Resgate sua identidade. Redescubra seu propósito. Persevere na sua jornada.</p>
+   <h3 class="t" style="text-align:center;font-size:1.3rem;margin:24px 0 4px">Por onde você quer começar?</h3>
+   <p class="sub" style="text-align:center;margin:0 0 16px">Escolha pelo seu momento. Dá para trocar depois.</p>
+   <div style="display:grid;gap:12px">
+    <button class="season trilha" data-go="start" data-trilha="cas" aria-pressed="${tget()==='cas'}"><span class="ti"><img src="aliancas-entrelacadas.png" alt="" style="width:80px"></span><span class="tx"><b>Meu casamento</b><span class="tk">40 dias de jornada a dois</span><span class="small">Para cuidar do casamento, a dois ou começando por você.</span></span></button>
+    <button class="season trilha" data-go="start" data-trilha="id" aria-pressed="${tget()==='id'}"><span class="ti"><img src="broto.svg" alt="" style="width:84px"></span><span class="tx"><b>Quem eu sou</b><span class="tk">Eu não sou um acidente</span><span class="small">Você foi criado de propósito, para um propósito.</span><span class="small" style="font-style:italic;margin-top:2px">Estudo 1 aberto · mais estudos em breve</span></span></button>
+   </div>
+   <p class="small" style="text-align:center;margin-top:16px">Não existe escolha errada.</p>
+   <button class="btn ghost" data-go="mentor" style="border:0;padding:6px;font-weight:600;font-size:.85rem;width:100%;margin-top:8px">Quem é o Mentor?</button>
+   <p class="small" style="text-align:center;margin:10px 0 0">Este app não substitui psicólogo, psiquiatra ou atendimento médico. Em perigo, ligue 192.</p></div>`;
  },
  season(){
   const cur=sget();
@@ -575,11 +585,21 @@ const R={
   <p class="small" style="margin-top:16px">Se você corre perigo ou pensa em tirar a própria vida, toque em <b>Ajuda</b>, no alto da tela.</p>`;
  },
  journey(){
+  const troca=t=>`<a href="#" class="estacao" data-go="welcome" style="margin:0 0 14px"><span>Sua jornada: <b>${t}</b></span><b>Trocar ›</b></a>`;
+  if(tget()==='id'){
+   view.innerHTML=`${troca('Quem eu sou')}<h3 class="t">Minha jornada</h3>
+   <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div></div>
+   <div class="stack" style="margin-top:14px"><div class="steplabel">Os estudos</div>
+   ${ENC.map(([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?'Abrir':'Em breve'}</span></button>`).join('')}
+   <p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div>`;
+   return;
+  }
+  const CU=curioMsg();
   const d=hoje(),PW=PAL[d];
   const casNotes=[1,2,3,4,5].map(x=>[x,dget('c1d'+x)]).filter(x=>x[1].trim());
   const open=d===1?'data-go="encounter" data-track="cas" data-enc="0"':`data-go="day" data-day="${d}"`;
   const ETS=[['A ideia foi de Deus','Gênesis 2.18-24'],...CICLOS];
-  view.innerHTML=`<h3 class="t">Minha jornada</h3>
+  view.innerHTML=`${troca('Meu casamento')}<h3 class="t">Minha jornada</h3>
   <div class="today"><div class="k">Hoje</div><div class="big">Dia ${d} <span>de 40</span></div><p>${DN[d]}</p><div class="thin" aria-label="Dia ${d} de 40"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin:6px 0 12px">Dia ${d} de 40 · Etapa 1 · Dias 1 a 5</div><button class="btn" ${open}>Abrir o dia de hoje</button></div>
   <section class="word" aria-label="Palavra do dia da jornada"><div class="k">Palavra do dia · Dia ${d} de 40</div><p class="q">${PW.q}</p><div class="who">${PW.ref}</div><p class="ponte">${PW.ctx}</p></section>
   <div class="stack">
@@ -587,6 +607,7 @@ const R={
    <div><div class="steplabel" style="margin-top:4px">As 8 etapas</div><p class="small" style="margin:4px 0 6px">Cada etapa tem 5 dias. Toque numa etapa para ver os dias.</p>
    ${ETS.map(([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Etapa<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z} · ${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`}).join('')}</div>
    <div class="card"><div class="steplabel">Meu diário</div>${casNotes.length?casNotes.map(([x,t])=>`<div style="margin-top:10px"><div class="small"><b>Dia ${x}</b>${x===5&&dget('c1-desafio')?' · Desafio: '+esc(dget('c1-desafio')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<p class="small" style="margin-top:6px">Suas anotações aparecem aqui. Ficam salvas só neste celular.</p>`}</div>
+   <div class="curio"><div class="lb">Você sabia?</div><p class="cq">${CU.q}</p><details><summary>Ver a resposta</summary><p>${CU.a}</p><p>${CU.b}</p></details><p class="cn">Uma curiosidade sobre o casamento a cada dia.</p></div>
    <details class="card"><summary style="font-weight:700;cursor:pointer">Guardado · Módulo 01 "Você não é um acidente"</summary>
     <p class="small" style="margin:8px 0 4px">Estudos de identidade, guardados para depois do piloto.</p>
     ${ENC.map(([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?'Abrir':'Em breve'}</span></button>`).join('')}</details>
