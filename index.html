@@ -455,7 +455,7 @@ function filme(t){
   if(visto||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   try{localStorage.setItem('fvp-filme-'+t,'1')}catch(e){}
   const F={cas:{f1:'Toda história de amor começa com um sim.',f2:'E continua com uma decisão, todos os dias.',cena:'<div class="par"><img class="esq" src="aliancas-entrelacadas.png" alt=""><img class="dir" src="aliancas-entrelacadas.png" alt=""><img class="inteira" src="aliancas-entrelacadas.png" alt=""></div>',k:'Casamento',bv:'Bem-vindo à jornada a dois.'},
-   id:{f1:'A terra não define quem você é.',f2:'Quem define é Aquele que te criou.',cena:'<img class="broto" src="broto.svg" alt="">',k:'Quem eu sou',bv:'Você foi criado de propósito, e com propósito.'}}[t];
+   id:{f1:'Sua identidade não é definida pelo que dizem sobre você.',f2:'Quem define é Aquele que te criou.',cena:'<img class="broto" src="broto.svg" alt="">',k:'Quem eu sou',bv:'Você foi criado de propósito, e com propósito.'}}[t];
   const el=document.createElement('div');el.className='filme';el.setAttribute('role','dialog');el.setAttribute('aria-label','Abertura da jornada');
   el.innerHTML=`<button class="pular">Pular</button><p class="f f1">${F.f1}</p><p class="f f2">${F.f2}</p><div class="cena" aria-hidden="true">${F.cena}</div><p class="bv"><small>${F.k}</small>${F.bv}</p>`;
   $('#screen').appendChild(el);
