@@ -451,9 +451,7 @@ const ENC=[
  ['Minha história não acabou','Filipenses 1'],['Eu não sou um acidente','Síntese e compromisso']];
 
 function filme(t){
-  let visto='';try{visto=localStorage.getItem('fvp-filme-'+t)||''}catch(e){}
-  if(visto||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  try{localStorage.setItem('fvp-filme-'+t,'1')}catch(e){}
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const F={cas:{f1:'Toda história de amor começa com um sim.',f2:'E continua com uma decisão, todos os dias.',cena:'<div class="par"><img class="esq" src="aliancas-entrelacadas.png" alt=""><img class="dir" src="aliancas-entrelacadas.png" alt=""><img class="inteira" src="aliancas-entrelacadas.png" alt=""></div>',k:'Casamento',bv:'Bem-vindo à jornada a dois.'},
    id:{f1:'Sua identidade não é definida pelo que dizem sobre você.',f2:'Quem define é Aquele que te criou.',cena:'<img class="broto" src="broto.svg" alt="">',k:'Quem eu sou',bv:'Você foi criado de propósito, e com propósito.'}}[t];
   const el=document.createElement('div');el.className='filme';el.setAttribute('role','dialog');el.setAttribute('aria-label','Abertura da jornada');
@@ -855,7 +853,7 @@ function closeOverlays(){['#crisis','#sb'].forEach(s=>{const e=$(s);if(e)e.remov
 
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g||g.getAttribute('aria-disabled')==='true')return;
   let k=g.dataset.go;
-  if(k==='start'){const t=tget();let ps='';try{ps=localStorage.getItem('fvp-portal-'+t)||''}catch(e){}k=(t&&!ps&&!g.dataset.portalOk)?'portal':(sget()?'checkin':'season');}
+  if(k==='start'){const t=tget();let ps='';try{ps=localStorage.getItem('fvp-portal-'+t)||''}catch(e){}k=(t&&(g.dataset.trilha||!ps)&&!g.dataset.portalOk)?'portal':(sget()?'checkin':'season');}
   if(k==='encounter'){
    if(g.dataset.enc!=null){state.track=g.dataset.track||'cas';state.enc=+g.dataset.enc;state.step=0}
    else{state.track='cas';state.enc=0;if(state.step>=STEPS.length)state.step=0}
