@@ -372,6 +372,10 @@ h1,h2,h3.t,.motto{color:var(--title,var(--ink))}
 .notes{display:none!important}
 .stage{display:flex!important;justify-content:center;max-width:none}
 html,body{overscroll-behavior:none}
+/* proteção: nada passa da largura da tela */
+html,body{overflow-x:hidden;max-width:100%}
+.screen,.view{max-width:100%;overflow-x:hidden}
+.q,.t,.verse,p{overflow-wrap:break-word}
 @media (max-width:600px){
   body{padding:0!important;margin:0;background:var(--paper)}
   .stage{display:block!important}
