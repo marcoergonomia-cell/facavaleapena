@@ -576,7 +576,7 @@ const R={
    <p style="font-family:var(--display);font-size:2.1rem;line-height:1.1;margin:8px 0 12px">${P.big}</p>
    ${P.l.map(x=>`<p style="margin:0 0 8px;color:var(--soft)">${x}</p>`).join('')}
    <div style="border-left:3px solid var(--dawn);padding:2px 0 2px 12px;margin:14px 0 0"><p style="font-family:var(--display);margin:0;font-size:1.02rem">${P.v}</p><div class="small" style="margin-top:4px">${P.r}</div></div></div>
-   <div style="margin-top:20px"><button class="btn" data-go="start" data-portal-ok="1">Começar a jornada</button><button class="btn ghost" data-go="welcome" style="border:0;margin-top:6px;width:100%;font-weight:600">‹ Voltar</button></div></div>`;
+   <div style="margin-top:20px"><button class="btn" ${id?'data-go="encounter" data-track="id" data-enc="0"':(hoje()===1?'data-go="encounter" data-track="cas" data-enc="0"':`data-go="day" data-day="${hoje()}"`)} data-portal-ok="1">Começar a jornada</button><button class="btn ghost" data-go="welcome" style="border:0;margin-top:6px;width:100%;font-weight:600">‹ Voltar</button></div></div>`;
   filme(id?'id':'cas');
  },
  season(){
@@ -874,7 +874,7 @@ $('#langTop').onclick=()=>{closeOverlays();
  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{$('#langCode').textContent=b.dataset.lang;closeOverlays()});
 };
 applySeason();
-go('welcome');
+go(tget()?'checkin':'welcome');
 </script>
 
 <script>
