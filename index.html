@@ -203,6 +203,8 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .filme .bv{position:absolute;left:24px;right:24px;top:62%;text-align:center;font-size:1.45rem;opacity:0;margin:0;animation:fin 1.4s ease 14.6s forwards}
 .filme .bv small{display:block;font:700 .7rem var(--body);letter-spacing:.12em;text-transform:uppercase;color:#E8AE4C;margin-bottom:8px}
 @keyframes fin{to{opacity:1}}
+.comoesta{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;margin:0 0 16px;padding:12px 14px;border-radius:14px;font-weight:700;text-align:left}
+.comoesta span{font-weight:400;font-size:.78rem;color:var(--soft)}
 .cover{flex:none;width:58px;height:80px;border-radius:4px;background:linear-gradient(170deg,#FFFDF8,#F1E9DA);border:1px solid #E4D9C6;box-shadow:2px 3px 8px rgba(60,40,20,.18);color:#2A2722;font-family:var(--display);font-size:.5rem;line-height:1.1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;padding:5px 4px}
 .cover img{width:46px;height:auto;display:block}
 
@@ -631,7 +633,7 @@ const R={
   <p class="small" style="margin-top:16px">Se você corre perigo ou pensa em tirar a própria vida, toque em <b>Ajuda</b>, no alto da tela.</p>`;
  },
  journey(){
-  const troca=t=>`<a href="#" class="estacao" data-go="welcome" style="margin:0 0 14px"><span>Sua jornada: <b>${t}</b></span><b>Trocar ›</b></a>`;
+  const troca=t=>`<a href="#" class="estacao" data-go="welcome" style="margin:0 0 10px"><span>Sua jornada: <b>${t}</b></span><b>Trocar ›</b></a><button class="btn ghost comoesta" data-go="checkin">Como você está hoje? <span>Palavra de sabedoria e emoções ›</span></button>`;
   if(tget()==='id'){
    view.innerHTML=`${troca('Quem eu sou')}<h3 class="t">Minha jornada</h3>
    <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div></div>
@@ -853,7 +855,7 @@ function closeOverlays(){['#crisis','#sb'].forEach(s=>{const e=$(s);if(e)e.remov
 
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g||g.getAttribute('aria-disabled')==='true')return;
   let k=g.dataset.go;
-  if(k==='start'){const t=tget();let ps='';try{ps=localStorage.getItem('fvp-portal-'+t)||''}catch(e){}k=(t&&(g.dataset.trilha||!ps)&&!g.dataset.portalOk)?'portal':(sget()?'checkin':'season');}
+  if(k==='start'){const t=tget();let ps='';try{ps=localStorage.getItem('fvp-portal-'+t)||''}catch(e){}k=g.dataset.trilha?'journey':((t&&!ps&&!g.dataset.portalOk)?'portal':(sget()?'checkin':'season'));if(g.dataset.trilha)setTimeout(()=>filme(g.dataset.trilha),0);}
   if(k==='encounter'){
    if(g.dataset.enc!=null){state.track=g.dataset.track||'cas';state.enc=+g.dataset.enc;state.step=0}
    else{state.track='cas';state.enc=0;if(state.step>=STEPS.length)state.step=0}
@@ -874,7 +876,7 @@ $('#langTop').onclick=()=>{closeOverlays();
  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{$('#langCode').textContent=b.dataset.lang;closeOverlays()});
 };
 applySeason();
-go(tget()?'checkin':'welcome');
+go('welcome');
 </script>
 
 <script>
