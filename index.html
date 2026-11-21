@@ -410,6 +410,8 @@ h1,h2,h3.t,.motto{color:var(--title,var(--ink))}
 .favitem .r{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:.8rem;color:var(--soft)}
 .favitem .r button{background:none;border:0;color:var(--soft);font:600 .8rem var(--body);text-decoration:underline;cursor:pointer}
 .guard{display:flex;justify-content:space-between;align-items:center;width:100%;margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--paper);font:inherit;color:var(--ink);cursor:pointer}
+.jlinks{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:18px 0 6px}.jlinks button{background:none;border:0;padding:2px 0;font:600 .88rem var(--body);color:var(--deep);cursor:pointer;text-align:left}
+.word .fav,.fav{background:none!important;border:0!important;padding:4px!important;border-radius:0!important}
 </style>
 <style id="modo-app">
 .notes{display:none!important}
@@ -721,18 +723,19 @@ const R={
   <p class="small" style="margin-top:16px">Se você corre perigo ou pensa em tirar a própria vida, toque em <b>Ajuda</b>, no alto da tela.</p>`;
  },
  journey(){
-  const troca=t=>`<a href="#" class="estacao" data-go="welcome" style="margin:0 0 10px"><span>Sua jornada: <b>${t}</b></span><b>Trocar ›</b></a><button class="btn ghost comoesta" data-go="checkin">Como você está hoje? <span>Palavra de sabedoria e emoções ›</span></button>`;
+  const troca=t=>`<button class="btn ghost comoesta" data-go="checkin" style="margin-top:16px">Como você está hoje? <span>Palavra de sabedoria e emoções ›</span></button>`;
+  const links=t=>`<div class="jlinks"><button data-go="favs">Guardados${favs().length?' ('+favs().length+')':''} ›</button><button data-go="welcome">Sua jornada: ${t} · Trocar ›</button></div>`;
   if(tget()==='id'){
    const IF=idFeitos();let ni=[0,1,2].find(x=>!IF.includes(x));const allId=ni==null;if(allId)ni=0;const [it,ir]=ENC[ni];
    const igo=`data-go="encounter" data-track="id" data-enc="${ni}"`;
    view.innerHTML=`${saudHTML()}${ritmoHTML(allId?'Você leu os 3 estudos abertos. Pode reler o que mais falou com você.':`Leia com calma o Estudo ${ni+1}: ${it}.`,igo)}
    <div class="steplabel" style="margin:0 0 8px">Seu próximo passo</div>
    <button class="prox" ${igo} style="display:block;width:100%;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer"><div class="vid"><span class="tm">Vídeo do Mentor · em breve</span><span class="play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M6 3.5v13l10.5-6.5z" fill="#F3EEE5"/></svg></span><div class="vk">Estudo ${ni+1} de 3</div><div class="vt">${it}</div></div><div class="info"><div class="small">${ir} · O vídeo do Mentor ainda está em gravação. O estudo já está aberto.</div><div class="btn" style="margin-top:12px;text-align:center">Abrir o estudo</div></div></button>
-   ${troca('Quem eu sou')}${guardHTML()}<h3 class="t">Minha jornada</h3>
+   <h3 class="t">Minha jornada</h3>
    <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div></div>
    <div class="stack" style="margin-top:14px"><div class="steplabel">Os estudos</div>
    ${ENC.map(([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?'Abrir':'Em breve'}</span></button>`).join('')}
-   <p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div>`;
+   <p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div>${troca('Quem eu sou')}${links('Quem eu sou')}`;
    bindSaud();return;
   }
   const CU=curioMsg();
@@ -744,19 +747,20 @@ const R={
   view.innerHTML=`${saudHTML()}${ritmoHTML(PASSO[d],open)}
   <div class="steplabel" style="margin:0 0 8px">Seu próximo passo</div>
   <div class="prox"><button ${open} class="vid" style="display:flex;width:100%;border:0;text-align:left;font:inherit;cursor:pointer"><span class="tm">${d===1?'Vídeo do Mentor · 1 min · em gravação':'Vídeo do Mentor · em breve'}</span><span class="play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M6 3.5v13l10.5-6.5z" fill="#F3EEE5"/></svg></span><span class="vk">Hoje · Dia ${d} de 40</span><span class="vt">${DN[d].split(' · ')[1]||DN[d]}</span></button>
-   <div class="info"><div class="small">${DN[d].split(' · ')[0]} · cerca de ${somaMin(PT)} min, no seu tempo</div>${partesHTML(PT)}<div class="thin" aria-label="Dia ${d} de 40" style="margin:0 0 6px"><b style="width:${d/40*100}%"></b></div><div class="small" style="margin:0 0 12px">Dia ${d} de 40 · Etapa 1 · Dias 1 a 5</div><button class="btn" style="width:100%" ${open}>Abrir o dia de hoje</button></div></div>
-  ${troca('Casamento')}${guardHTML()}<h3 class="t">Minha jornada</h3>
-  <section class="word" aria-label="Palavra do dia da jornada"><div class="k">Palavra do dia · Dia ${d} de 40</div><p class="q">${PW.q}</p><div class="who">${PW.ref}</div><p class="ponte">${PW.ctx}</p></section>
+   <div class="info"><div class="small">${DN[d].split(' · ')[0]} · cerca de ${somaMin(PT)} min, no seu tempo</div>${partesHTML(PT)}<button class="btn" style="width:100%" ${open}>Abrir o dia de hoje</button></div></div>
+  <h3 class="t">Minha jornada</h3>
+  
   <div class="stack">
    <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div></div>
    <div><div class="steplabel" style="margin-top:4px">As 8 etapas</div><p class="small" style="margin:4px 0 6px">Cada etapa tem 5 dias. Toque numa etapa para ver os dias.</p>
    ${ETS.map(([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Etapa<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z} · ${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`}).join('')}</div>
+   ${troca('Casamento')}
    <div class="card"><div class="steplabel">Meu diário</div>${casNotes.length?casNotes.map(([x,t])=>`<div style="margin-top:10px"><div class="small"><b>Dia ${x}</b>${x===5&&dget('c1-desafio')?' · Desafio: '+esc(dget('c1-desafio')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<p class="small" style="margin-top:6px">Suas anotações aparecem aqui. Ficam salvas só neste celular.</p>`}</div>
    <div class="curio"><div class="lb">Você sabia?</div><p class="cq">${CU.q}</p><details><summary>Ver a resposta</summary><p>${CU.a}</p><p>${CU.b}</p></details><p class="cn">Uma curiosidade sobre o casamento a cada dia.</p></div>
    <details class="card"><summary style="font-weight:700;cursor:pointer">Guardado · Módulo 01 "Você não é um acidente"</summary>
     <p class="small" style="margin:8px 0 4px">Estudos de identidade, guardados para depois do piloto.</p>
     ${ENC.map(([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?'Abrir':'Em breve'}</span></button>`).join('')}</details>
-  </div>`;
+  </div>${links('Casamento')}`;
   bindSaud();
  },
  favs(){
