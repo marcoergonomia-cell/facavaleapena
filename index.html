@@ -531,6 +531,7 @@ const view = $('#view'), tabs = $('#tabs'), screen = $('#screen'), slot = $('#co
 
 const WHY = {
   welcome:{n:'1 · Boas-vindas',h:'Entrada sem cadastro',p:'Acolher em 10 segundos e deixar claro o que o app é e o que não é.',c:'Frase-mestra, três promessas simples e um aviso honesto. Um botão só: "Começar".',i:'Fase 1 não pede nome, e-mail nem senha. Nada é guardado.',j:'A pessoa entra sem medo de ser julgada ou exposta.'},
+  copia:{n:'Cópia da jornada',h:'Trocar de celular sem perder nada',p:'Sem cadastro, tudo fica só no celular. Se a pessoa troca de aparelho, perderia o caminho.',c:'Faz um arquivo com o que está salvo (progresso, nome, ritmo, guardados, diário). A pessoa guarda ou manda para si no WhatsApp e restaura no celular novo. Nada vai para servidor.'},
   favs:{n:'Guardados',h:'Versículos e frases guardados',p:'O que tocou a pessoa fica à mão.',c:'Coração ao lado de versículos e citações. Salvo só no celular.'},
  parte:{n:'Parte do dia',h:'Uma parte do dia de cada vez',p:'Dias 2 a 5 em partes curtas, na ordem que a pessoa quiser.',c:'Palavra do dia, desafio e diário. Com as 3 partes feitas, o dia se marca sozinho.'},
  portal:{n:'1a · Portal da jornada',h:'Uma tela de impacto ao escolher a jornada',p:'Escolher a porta precisa ter peso.',c:'Casamento: alianças e "Amar é uma decisão." Quem eu sou: broto e "Você não é um acidente." Aparece só na primeira vez de cada jornada.'},
@@ -596,7 +597,7 @@ function go(k){
   slot.innerHTML='';
   const full = k==='welcome'||k==='season'||k==='seasonmsg'||k==='portal';
   tabs.hidden = full; $('#topbar').style.visibility = full?'hidden':'visible';
-  [...tabs.children].forEach(b=>b.setAttribute('aria-current', b.dataset.go===k || ((k==='encounter'||k==='day'||k==='etapa'||k==='parte'||k==='favs')&&b.dataset.go==='journey')));
+  [...tabs.children].forEach(b=>b.setAttribute('aria-current', b.dataset.go===k || ((k==='encounter'||k==='day'||k==='etapa'||k==='parte'||k==='favs'||k==='copia')&&b.dataset.go==='journey')));
   {const tab=[...tabs.children].some(b=>b.dataset.go===k);if(CURV&&CURV!==k)PREVV=CURV;CURV=k;const bt=document.getElementById('backTop');if(bt){bt.hidden=full||tab;bt.onclick=()=>go(PREVV&&PREVV!==k&&PREVV!=='welcome'?PREVV:'journey')}}
   renderWhy(k);
   R[k]();
@@ -835,7 +836,7 @@ const R={
    ${(()=>{const eb=([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?(IF.includes(i)?'✓ Feito':i===ni?'Agora ›':'Abrir'):'Em breve'}</span></button>`;
     return `<div class="stack" style="margin-top:12px">${eb(ENC[ni],ni)}<details class="maisetp"><summary>Ver os ${ENC.length} estudos</summary><div class="stack" style="margin-top:8px">${ENC.map((e,i)=>i===ni?'':eb(e,i)).join('')}<p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div></details></div>`})()}
    ${troca()}
-   <div class="jlinks"><button data-go="favs">Guardados${favs().length?' ('+favs().length+')':''} ›</button><button data-go="welcome">Sua jornada: Quem eu sou · Trocar ›</button></div>`;
+   <div class="jlinks"><button data-go="favs">Guardados${favs().length?' ('+favs().length+')':''} ›</button><button data-go="copia">Cópia da minha jornada ›</button><button data-go="welcome">Sua jornada: Quem eu sou · Trocar ›</button></div>`;
    bindSaud();return;
   }
   const CU=curioMsg();
@@ -857,6 +858,7 @@ const R={
    <details><summary>Meu diário${casNotes.length?' ('+casNotes.length+')':''} ›</summary><div class="jl-body">${casNotes.length?casNotes.map(([x,t])=>`<div style="margin-top:10px"><div class="small"><b>Dia ${x}${x>=2&&x<=4?' · Desafio: uma qualidade':''}</b>${dget('c1d'+x+'-data')?' · '+esc(dget('c1d'+x+'-data')):''}${x===5&&dget('c1-desafio')?' · Desafio: '+esc(dget('c1-desafio')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<p class="small" style="margin:6px 0 0">Suas anotações aparecem aqui. Ficam salvas só neste celular.</p>`}</div></details>
    <details><summary>Você sabia? ›</summary><div class="jl-body curio" style="margin-top:8px"><p class="cq">${CU.q}</p><details><summary>Ver a resposta</summary><p>${CU.a}</p><p>${CU.b}</p></details><p class="cn">Uma curiosidade sobre o casamento a cada dia.</p></div></details>
    <button data-go="favs">Guardados${favs().length?' ('+favs().length+')':''} ›</button>
+   <button data-go="copia">Cópia da minha jornada ›</button>
    <button data-go="welcome">Sua jornada: Casamento · Trocar ›</button>
   </div>`;
   bindSaud();
@@ -874,6 +876,30 @@ const R={
   bindDiary();
   view.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{dset('c1-desafio',b.dataset.pick);R.parte()});
   $('#fimParte').onclick=()=>{marcaParte(d,i);go('journey')};
+ },
+ copia(){
+  const keys=()=>{const o={};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('fvp-'))o[k]=localStorage.getItem(k)}}catch(e){}return o};
+  view.innerHTML=`<h3 class="t" style="margin-top:6px">Cópia da minha jornada</h3>
+  <p class="sub">Sua jornada fica salva só neste celular. Não pedimos cadastro nem guardamos nada seu. Se um dia trocar de celular, faça uma cópia antes e leve com você.</p>
+  <div class="card" style="margin-top:12px"><div style="font-weight:700">Fazer uma cópia</div><p class="small" style="margin:4px 0 12px">Cria um arquivo com o seu caminho até aqui: dias feitos, seu ritmo, guardados e o que escreveu no diário. Guarde o arquivo ou mande para você mesmo no WhatsApp.</p><button class="btn" id="cpFaz" style="width:100%">Fazer cópia da minha jornada</button><p class="small" id="cpMsg" role="status" style="margin:8px 0 0"></p></div>
+  <div class="card" style="margin-top:12px"><div style="font-weight:700">Restaurar no celular novo</div><p class="small" style="margin:4px 0 12px">Abra o app no celular novo, venha até aqui e escolha o arquivo da cópia.</p><label class="btn ghost" style="width:100%;display:block;text-align:center;cursor:pointer;box-sizing:border-box">Restaurar minha jornada<input type="file" id="cpArq" accept=".json,application/json,text/plain" hidden></label><div id="cpConf"></div></div>
+  <p class="small" style="margin-top:14px">O arquivo tem o que você escreveu no diário. Guarde num lugar só seu.</p>`;
+  const msg=t=>{$('#cpMsg').textContent=t};
+  $('#cpFaz').onclick=async()=>{const data={app:'faca-valer-a-pena',v:1,data:new Date().toISOString(),itens:keys()};
+   const nome='minha-jornada-'+dloc()+'.json';const txt=JSON.stringify(data);
+   try{const file=new File([txt],nome,{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Cópia da minha jornada'});msg('Pronto. Guarde esse arquivo num lugar seguro.');return}}catch(e){if(e&&e.name==='AbortError'){msg('');return}}
+   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download=nome;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);
+   msg('Pronto. O arquivo foi salvo nos downloads do celular.')};
+  $('#cpArq').onchange=e=>{const fl=e.target.files[0];if(!fl)return;const rd=new FileReader();rd.onload=()=>{let d=null;try{d=JSON.parse(rd.result)}catch(_){}
+   const box=$('#cpConf');
+   if(!d||d.app!=='faca-valer-a-pena'||!d.itens){box.innerHTML='<p class="small" style="margin:10px 0 0;color:var(--risk,#B03A2E)">Esse arquivo não é uma cópia da jornada. Confira e tente de novo.</p>';return}
+   const qd=d.data?new Date(d.data).toLocaleDateString('pt-BR'):'';
+   box.innerHTML=`<p style="margin:12px 0 8px">Encontramos uma cópia${qd?' de '+qd:''}. Ao restaurar, ela substitui o que está neste celular agora.</p><button class="btn" id="cpSim" style="width:100%">Sim, restaurar</button><button class="btn ghost" id="cpNao" style="width:100%;margin-top:8px">Cancelar</button>`;
+   $('#cpNao').onclick=()=>{box.innerHTML='';e.target.value=''};
+   $('#cpSim').onclick=()=>{try{Object.keys(keys()).forEach(k=>localStorage.removeItem(k));Object.entries(d.itens).forEach(([k,v])=>{if(k.startsWith('fvp-')&&typeof v==='string')localStorage.setItem(k,v)})}catch(_){}
+    box.innerHTML='<p style="margin:12px 0 0"><b>Sua jornada voltou.</b> Bem-vindo de volta.</p><button class="btn" id="cpIr" style="width:100%;margin-top:10px">Abrir minha jornada</button>';$('#cpIr').onclick=()=>location.reload()}};
+   rd.readAsText(fl)};
  },
  favs(){
   const F=favs();
