@@ -656,7 +656,7 @@ function ritmoHTML(passoTxt,passoGo){let L=[];try{L=JSON.parse(lsg('fvp-ritmo','
  const t=new Date();t.setHours(12,0,0,0);const dow=t.getDay();const N=['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];let n=0;
  const cells=N.map((nm,i)=>{const x=new Date(t);x.setDate(t.getDate()-dow+i);const f=L.includes(dloc(x));if(f)n++;const hj=i===dow;return `<div class="${hj?'hj':''}">${nm}<i class="${f?'feito':hj?'hoje':''}" aria-label="${nm}${f?', caminhou':''}"></i></div>`}).join('');
  const msg=n===0?'Sua semana começa no primeiro passo.':n===1?'Esta semana você caminhou 1 dia.':`Esta semana você caminhou ${n} dias.`;
- return `<div class="ritmo"><div class="top"><b>Seu ritmo</b><span>${msg}</span></div><div class="dias">${cells}</div><button class="passo" ${passoGo}><span class="ic" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 1.5v9l7-4.5z" fill="var(--deep)"/></svg></span><span><span class="pk">Seu passo de hoje</span><div class="pt">${passoTxt}</div></span><span class="ar" aria-hidden="true">›</span></button></div>`}
+ return `<div class="ritmo"><div class="top"><b>Seu ritmo</b><span>${msg}</span></div><div class="dias">${cells}</div></div>`}
 const PARTES={1:[['Antes de começar · reflexão','1 min'],['Estudo','4 min'],['Vídeo do Mentor','1 min'],['Perguntas para pensar','3 min'],['Dinâmica "Por que eu disse sim"','10 min'],['Passo possível','2 min']],
  2:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],3:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],4:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],
  5:[['Palavra do dia','1 min'],['Como foi o desafio?','1 min'],['O que você percebeu','2 min']]};
