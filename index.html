@@ -437,6 +437,7 @@ h1,h2,h3.t,.motto{color:var(--title,var(--ink))}
 html{-webkit-tap-highlight-color:transparent}
 .filme [hidden]{display:none!important}
 .filme .f{overflow-wrap:break-word;max-width:calc(100% - 56px)}
+.papeis{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 2px}.papeis .opt{flex:1 1 auto;width:auto;padding:10px 12px;font-size:.9rem}
 </style>
 <style id="modo-app">
 .notes{display:none!important}
@@ -649,11 +650,12 @@ const lss=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,
 const dloc=(x=new Date())=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
 function ritmoMark(){let L=[];try{L=JSON.parse(lsg('fvp-ritmo','[]'))}catch(e){}const d=dloc();if(!L.includes(d)){L.push(d);L=L.slice(-60);lss('fvp-ritmo',JSON.stringify(L))}}
 function saudacao(){const h=new Date().getHours();return h>=5&&h<12?'Bom dia':h>=12&&h<18?'Boa tarde':'Boa noite'}
-function saudHTML(){const n=lsg('fvp-nome'),asked=lsg('fvp-nome-ok');
- if(!asked)return `<div class="saud"><div class="k">${saudacao()}</div></div><div class="nomecard"><b>Como você gostaria de ser chamado?</b><div class="small" style="margin-top:2px">Só o primeiro nome. Fica salvo apenas neste celular.</div><input id="nomeIn" maxlength="24" autocomplete="given-name" placeholder="Seu primeiro nome" value="${esc(n)}"><div class="row"><button class="btn ghost" id="nomePula">Agora não</button><button class="btn" id="nomeOk">Salvar</button></div></div>`;
+function saudHTML(cas){const n=lsg('fvp-nome'),asked=lsg('fvp-nome-ok'),pp=lsg('fvp-papel'),cj=lsg('fvp-conjuge');
+ if(!asked)return `<div class="saud"><div class="k">${saudacao()}</div></div><div class="nomecard"><b>Como você gostaria de ser chamado?</b><div class="small" style="margin-top:2px">Só o primeiro nome. Fica salvo apenas neste celular.</div><input id="nomeIn" maxlength="24" autocomplete="given-name" placeholder="Seu primeiro nome" value="${esc(n)}">${cas?`<b style="display:block;margin-top:4px">Nesta jornada, você é:</b><div class="papeis" role="group" aria-label="Nesta jornada, você é">${[['esposa','Esposa'],['marido','Marido'],['nd','Prefiro não dizer']].map(([k,l])=>`<button type="button" class="opt" data-papel="${k}" aria-pressed="${pp===k}">${l}</button>`).join('')}</div><b style="display:block;margin-top:12px">Como se chama quem divide a vida com você?</b><div class="small">Opcional.</div><input id="conjIn" maxlength="24" placeholder="Primeiro nome" value="${esc(cj)}">`:''}<div class="row"><button class="btn ghost" id="nomePula">Agora não</button><button class="btn" id="nomeOk">Salvar</button></div></div>`;
  return `<div class="saud"><div class="k">${saudacao()}${n?',':''}</div>${n?`<div class="nm">${esc(n)} <button id="nomeTroca">trocar nome</button></div>`:`<div class="nm" style="font-size:1rem"><button id="nomeTroca">Dizer como quero ser chamado</button></div>`}</div>`}
 function bindSaud(){const ok=$('#nomeOk'),pu=$('#nomePula'),tr=$('#nomeTroca'),inp=$('#nomeIn');
- if(ok)ok.onclick=()=>{const v=(inp.value||'').trim().split(/\s+/)[0]||'';lss('fvp-nome',v||null);lss('fvp-nome-ok','1');go('journey')};
+ view.querySelectorAll('[data-papel]').forEach(b=>b.onclick=()=>{view.querySelectorAll('[data-papel]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+ if(ok)ok.onclick=()=>{const v=(inp.value||'').trim().split(/\s+/)[0]||'';lss('fvp-nome',v||null);const pb=view.querySelector('[data-papel][aria-pressed="true"]');if(pb)lss('fvp-papel',pb.dataset.papel);const cjI=$('#conjIn');if(cjI){const c=(cjI.value||'').trim().split(/\s+/)[0]||'';lss('fvp-conjuge',c||null)}lss('fvp-nome-ok','1');go('journey')};
  if(inp)inp.onkeydown=e=>{if(e.key==='Enter')ok.click()};
  if(pu)pu.onclick=()=>{lss('fvp-nome-ok','1');go('journey')};
  if(tr)tr.onclick=()=>{lss('fvp-nome-ok',null);go('journey');setTimeout(()=>{const i=$('#nomeIn');if(i)i.focus()},50)}}
@@ -667,7 +669,17 @@ const PARTES={1:[['Antes de começar · reflexão','1 min'],['Estudo','4 min'],[
  5:[['Palavra do dia','1 min'],['Como foi o desafio?','1 min'],['O que você percebeu','2 min']]};
 /* PROVISÓRIO: textos do "Seu passo de hoje" escritos pelo Claude para o Marquinho trocar pelas palavras dele.
    Regra: um gesto concreto, FORA do app, para aproximar o casamento; não repete o desafio; não depende da resposta do cônjuge; sem pressão nem culpa. */
-const PASSO={1:'Que tal convidar essa pessoa para um café, só vocês dois, e contar uma lembrança boa do começo da história de vocês?',2:'Que tal preparar algo especial para quem divide a vida com você? Pode ser simples, como aquele café ou aquela comida de que essa pessoa gosta.',3:'Que tal deixar um bilhete agradecendo por algo pequeno que essa pessoa faz todos os dias?',4:'Que tal fazer hoje, sem avisar, uma tarefa que normalmente fica com essa pessoa?',5:'Que tal separar um tempo sem celular para estar perto de quem você ama? Um passeio curto, um café, uma conversa sem pressa.'};
+/* ref(): como o texto chama o cônjuge. Esposa -> ele (seu marido / o Nome); Marido -> ela (sua esposa / a Nome); sem resposta -> essa pessoa / Nome */
+function ref(prep){const pp=lsg('fvp-papel'),nm=lsg('fvp-conjuge');let art=null,n;
+ if(nm){n=esc(nm);art=pp==='esposa'?'o':pp==='marido'?'a':null}else n=pp==='esposa'?'seu marido':pp==='marido'?'sua esposa':'essa pessoa';
+ if(prep==='de')return art?(art==='o'?'do ':'da ')+n:n==='essa pessoa'?'dessa pessoa':n==='seu marido'?'do seu marido':n==='sua esposa'?'da sua esposa':'de '+n;
+ return (prep?prep+' ':'')+(art?art+' ':'')+n}
+const PASSO={1:()=>`Que tal convidar ${ref('')} para um café, só vocês dois, e contar uma lembrança boa do começo da história de vocês?`,
+ 2:()=>`Que tal preparar algo especial ${ref('para')}? Pode ser simples, como aquele café ou aquela comida favorita.`,
+ 3:()=>`Que tal deixar um bilhete ${ref('para')}, agradecendo por algo pequeno que acontece todos os dias e quase ninguém percebe?`,
+ 4:()=>`Que tal fazer hoje, sem avisar, uma tarefa que normalmente fica ${ref('com')}?`,
+ 5:()=>`Que tal separar um tempo sem celular para estar perto ${ref('de')}? Um passeio curto, um café, uma conversa sem pressa.`};
+const passoHoje=d=>PASSO[d]?PASSO[d]():null;
 const partesHTML=(L)=>`<ul class="partes">${L.map(([a,b])=>`<li>${a}<span>${b}</span></li>`).join('')}</ul>`;
 const somaMin=L=>L.reduce((a,[,b])=>a+parseInt(b),0);
 function idFeitos(){try{return JSON.parse(lsg('fvp-id-feitos','[]'))}catch(e){return []}}
@@ -798,7 +810,7 @@ const R={
   const open=d===1?'data-go="encounter" data-track="cas" data-enc="0"':`data-go="day" data-day="${d}"`;
   const ETS=[['A ideia foi de Deus','Gênesis 2.18-24'],...CICLOS];
   const PT=PARTES[d]||[];
-  view.innerHTML=`${saudHTML()}${ritmoHTML(PASSO[d],d===1?open:`data-go="parte" data-day="${d}" data-parte="1"`)}
+  view.innerHTML=`${saudHTML(1)}${ritmoHTML(passoHoje(d),d===1?open:`data-go="parte" data-day="${d}" data-parte="1"`)}
   <div class="steplabel" style="margin:0 0 8px">Seu próximo passo</div>
   <div class="prox"><button ${open} class="vid" style="display:flex;width:100%;border:0;text-align:left;font:inherit;cursor:pointer"><span class="tm">${d===1?'Vídeo do Mentor · 1 min · em gravação':'Vídeo do Mentor · em breve'}</span><span class="play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M6 3.5v13l10.5-6.5z" fill="#F3EEE5"/></svg></span><span class="vk">Hoje · Dia ${d} de 40</span><span class="vt">${DN[d].split(' · ')[1]||DN[d]}</span></button>
    <div class="info">${d===1?`<p class="lead">Estudo · cerca de ${somaMin(PT)} min. Siga na ordem: cada tela prepara a próxima.</p>${partesHTML(PT)}<button class="btn" style="width:100%" ${open}>Começar o estudo</button>`:`<p class="lead">${DN[d].split(' · ')[0]} · cerca de ${somaMin(PT)} min. Toque numa parte, na ordem que quiser.</p>${prowsHTML(d)}`}</div></div>
