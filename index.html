@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Faça Valer a Pena</title>
 <meta name="description" content="40 dias de jornada a dois. Comece por você.">
 <meta name="theme-color" content="#FBF9F5">
@@ -183,7 +183,7 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .trilha .tx{display:grid;gap:3px;padding:14px 14px 14px 16px;align-content:center}
 .trilha .tx b{font-family:var(--display);font-weight:400;font-size:1.35rem;line-height:1.15;color:var(--ink)}
 .trilha .tk{font-weight:700;font-size:.82rem;color:var(--deep)}
-.filme{position:absolute;inset:0;z-index:40;background:#14120E;color:#F3EEE5;font-family:var(--display);overflow:hidden;transition:opacity 1.6s ease}
+.filme{position:absolute;inset:0;width:100%;max-width:100%;box-sizing:border-box;z-index:40;background:#14120E;color:#F3EEE5;font-family:var(--display);overflow:hidden;transition:opacity 1.6s ease}
 .filme.sai{opacity:0}
 .filme .pular{position:absolute;top:16px;right:16px;background:none;border:1px solid rgba(243,238,229,.25);color:rgba(243,238,229,.75);border-radius:999px;padding:6px 14px;font:600 .8rem var(--body)}
 .filme .f{position:absolute;left:28px;right:28px;top:42%;transform:translateY(-44%);font-size:1.75rem;line-height:1.25;text-align:center;opacity:0;margin:0;transition:opacity .9s ease,transform .9s ease}
@@ -430,6 +430,8 @@ h1,h2,h3.t,.motto{color:var(--title,var(--ink))}
 .filme:focus,.filme *:focus,.pausa:focus{outline:none}
 .filme .pular:focus-visible{outline:2px solid rgba(243,238,229,.6);outline-offset:2px}
 html{-webkit-tap-highlight-color:transparent}
+.filme [hidden]{display:none!important}
+.filme .f{overflow-wrap:break-word;max-width:calc(100% - 56px)}
 </style>
 <style id="modo-app">
 .notes{display:none!important}
@@ -531,14 +533,15 @@ function filme(t){
   el.innerHTML=`<button class="pular">Pular</button><p class="f f1">${F.f1}</p><p class="f f2">${F.f2}</p><div class="cena" aria-hidden="true">${F.cena}</div><p class="bv"><small>${F.k}</small>${F.bv}</p>`;
   $('#screen').appendChild(el);
   const fim=()=>{if(!el.isConnected||el.classList.contains('sai'))return;clearTimeout(tm);el.classList.add("sai");setTimeout(()=>el.remove(),1600)};
-  const f1=el.querySelector('.f1'),f2=el.querySelector('.f2'),ce=el.querySelector('.cena'),bv=el.querySelector('.bv');
+  const f1=el.querySelector('.f1'),f2=el.querySelector('.f2'),ce=el.querySelector('.cena'),bv=el.querySelector('.bv');[f2,ce,bv].forEach(x=>x.hidden=true);
   /* um passo por vez: 0 frase 1, 1 frase 2, 2 cena, 3 cena + boas-vindas */
   const PASSOS=[[f1],[f2],[ce],[ce,bv]],DUR=[3800,3800,1800,3600];let i=-1,tm=null;
   const passo=(n,toque)=>{clearTimeout(tm);if(n>=PASSOS.length){fim();return}
    const vis=PASSOS[n];
-   if(toque){el.classList.add('rapido');[f1,f2,ce,bv].forEach(x=>{if(!vis.includes(x))x.classList.remove('on')});if(n===3)ce.classList.add('ja');void el.offsetWidth;el.classList.remove('rapido')}
-   else [f1,f2,ce,bv].forEach(x=>{if(!vis.includes(x))x.classList.remove('on')});
-   const show=()=>{if(!el.isConnected||i!==n)return;vis.forEach(x=>x.classList.add('on'))};
+   /* quem sai: no toque some na hora; no automático apaga devagar e depois sai da tela */
+   [f1,f2,ce,bv].forEach(x=>{if(vis.includes(x))return;x.classList.remove('on');if(toque)x.hidden=true;else setTimeout(()=>{if(!x.classList.contains('on'))x.hidden=true},750)});
+   if(toque&&n===3)ce.classList.add('ja');
+   const show=()=>{if(!el.isConnected||i!==n)return;vis.forEach(x=>{x.hidden=false});void el.offsetWidth;vis.forEach(x=>x.classList.add('on'))};
    i=n;(toque||n===0||n===3)?show():setTimeout(show,700);
    tm=setTimeout(()=>passo(n+1,false),DUR[n])};
   el.querySelector('.pular').onclick=e=>{e.stopPropagation();clearTimeout(tm);fim()};
