@@ -187,20 +187,20 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .filme.sai{opacity:0}
 .filme .pular{position:absolute;top:16px;right:16px;background:none;border:1px solid rgba(243,238,229,.25);color:rgba(243,238,229,.75);border-radius:999px;padding:6px 14px;font:600 .8rem var(--body)}
 .filme .f{position:absolute;left:28px;right:28px;top:42%;transform:translateY(-50%);font-size:1.75rem;line-height:1.25;text-align:center;opacity:0;margin:0}
-.filme .f1{animation:fio 5.6s ease .5s forwards}
-.filme .f2{animation:fio 5.6s ease 6.4s forwards}
+.filme .f1{animation:fio 3.6s ease .4s forwards}
+.filme .f2{animation:fio 3.6s ease 4.2s forwards}
 @keyframes fio{0%{opacity:0;transform:translateY(-40%)}16%{opacity:1;transform:translateY(-50%)}86%{opacity:1}100%{opacity:0}}
-.filme .cena{position:absolute;left:0;right:0;top:30%;display:grid;place-items:center;opacity:0;animation:fin 1s ease 12.2s forwards}
+.filme .cena{position:absolute;left:0;right:0;top:30%;display:grid;place-items:center;opacity:0;animation:fin 1s ease 8s forwards}
 .filme .par{position:relative;width:260px;height:168px}
 .filme .par img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.filme .esq{clip-path:inset(0 50% 0 0);animation:esq 1.8s cubic-bezier(.2,.7,.2,1) 12.2s both}
-.filme .dir{clip-path:inset(0 0 0 50%);animation:dir 1.8s cubic-bezier(.2,.7,.2,1) 12.2s both}
-.filme .inteira{opacity:0;animation:fin .5s ease 13.9s forwards}
+.filme .esq{clip-path:inset(0 50% 0 0);animation:esq 1.6s cubic-bezier(.2,.7,.2,1) 8s both}
+.filme .dir{clip-path:inset(0 0 0 50%);animation:dir 1.6s cubic-bezier(.2,.7,.2,1) 8s both}
+.filme .inteira{opacity:0;animation:fin .5s ease 9.5s forwards}
 @keyframes esq{from{transform:translateX(-70px)}to{transform:none}}
 @keyframes dir{from{transform:translateX(70px)}to{transform:none}}
-.filme .broto{width:170px;animation:nasce 2.4s ease-out 12.2s both}
+.filme .broto{width:170px;animation:nasce 2s ease-out 8s both}
 @keyframes nasce{0%{clip-path:inset(60% 0 0 0)}100%{clip-path:inset(0 0 0 0)}}
-.filme .bv{position:absolute;left:24px;right:24px;top:62%;text-align:center;font-size:1.45rem;opacity:0;margin:0;animation:fin 1.4s ease 14.6s forwards}
+.filme .bv{position:absolute;left:24px;right:24px;top:62%;text-align:center;font-size:1.45rem;opacity:0;margin:0;animation:fin 1.2s ease 9.8s forwards}
 .filme .bv small{display:block;font:700 .7rem var(--body);letter-spacing:.12em;text-transform:uppercase;color:#E8AE4C;margin-bottom:8px}
 @keyframes fin{to{opacity:1}}
 .comoesta{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;margin:0 0 16px;padding:12px 14px;border-radius:14px;font-weight:700;text-align:left}
@@ -467,7 +467,7 @@ function filme(t){
   el.innerHTML=`<button class="pular">Pular</button><p class="f f1">${F.f1}</p><p class="f f2">${F.f2}</p><div class="cena" aria-hidden="true">${F.cena}</div><p class="bv"><small>${F.k}</small>${F.bv}</p>`;
   $('#screen').appendChild(el);
   const fim=()=>{if(!el.isConnected)return;el.classList.add("sai");setTimeout(()=>el.remove(),1600)};
-  el.querySelector('.pular').onclick=fim;const tm=setTimeout(fim,19500);
+  el.querySelector('.pular').onclick=fim;const tm=setTimeout(fim,13200);
 }
 function go(k){
   closeOverlays();
