@@ -423,6 +423,7 @@ h1,h2,h3.t,.motto{color:var(--title,var(--ink))}
 .prow .ck{flex:none;width:22px;height:22px;border-radius:50%;background:var(--deep);display:grid;place-items:center}
 .prox .info .lead{font-size:.82rem;color:var(--soft);margin:0 0 10px}
 .tbl{display:flex;align-items:center;gap:4px}.backtop{background:none;border:0;padding:6px 6px 6px 0;margin-left:-4px;color:var(--ink);display:grid;place-items:center;cursor:pointer}.backtop[hidden]{display:none}
+.pausa{cursor:pointer}
 </style>
 <style id="modo-app">
 .notes{display:none!important}
@@ -524,7 +525,12 @@ function filme(t){
   el.innerHTML=`<button class="pular">Pular</button><p class="f f1">${F.f1}</p><p class="f f2">${F.f2}</p><div class="cena" aria-hidden="true">${F.cena}</div><p class="bv"><small>${F.k}</small>${F.bv}</p>`;
   $('#screen').appendChild(el);
   const fim=()=>{if(!el.isConnected)return;el.classList.add("sai");setTimeout(()=>el.remove(),1600)};
-  el.querySelector('.pular').onclick=fim;const tm=setTimeout(fim,13200);
+  el.querySelector('.pular').onclick=e=>{e.stopPropagation();fim()};let tm=setTimeout(fim,13200);
+  let off=0;const t0=performance.now(),PTS=[4200,8000,9800];
+  el.addEventListener('click',e=>{if(e.target.closest('.pular'))return;const t=performance.now()-t0+off,nx=PTS.find(x=>x>t+150);if(nx==null){fim();return}
+   el.getAnimations({subtree:true}).forEach(a=>{try{a.currentTime=nx}catch(_){}});el.classList.add('tocou');
+   off+=nx-t;clearTimeout(tm);tm=setTimeout(fim,Math.max(800,13200-nx))});
+  el.style.cursor='pointer';
 }
 let CURV=null,PREVV=null;
 function go(k){
@@ -651,6 +657,7 @@ function addFavs(){const F=favs();const mk=(host,t,r)=>{if(!host||!t||host.query
 document.addEventListener('click',e=>{const b=e.target.closest('.fav');if(!b)return;e.preventDefault();e.stopPropagation();let F=favs();const t=b.dataset.t,r=(b.dataset.r||'').trim();
  if(F.some(x=>x.t===t)){F=F.filter(x=>x.t!==t);b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Guardar')}else{F.unshift({t,r});b.setAttribute('aria-pressed','true');b.setAttribute('aria-label','Tirar dos guardados')}
  lss('fvp-favs',JSON.stringify(F))},true);
+document.addEventListener('click',e=>{const pz=e.target.closest('.pausa');if(!pz)return;pz.getAnimations({subtree:true}).forEach(a=>{try{a.finish()}catch(_){}})});
 new MutationObserver(()=>addFavs()).observe(document.getElementById('view'),{childList:true});
 function guardHTML(){const n=favs().length;return `<button class="guard" data-go="favs"><span>Guardados <span class="small">· ${n?n+(n===1?' item':' itens'):'versículos e frases'}</span></span><b style="color:var(--deep)">›</b></button>`}
 const PICON={pal:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 5.5c3-1 6-1 9 1 3-2 6-2 9-1v13c-3-1-6-1-9 1-3-2-6-2-9-1z"/><path d="M12 6.5v13"/></svg>',
