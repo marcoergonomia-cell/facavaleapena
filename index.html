@@ -852,8 +852,8 @@ const R={
   ${ritmoHTML(null,'')}
   <h3 class="t jt">Minha jornada</h3>
   <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div></div>
-  <div class="stack" style="margin-top:12px"><div><div class="steplabel" style="margin-top:4px">As 8 etapas</div><p class="small" style="margin:4px 0 6px">Cada etapa tem 5 dias. Toque numa etapa para ver os dias.</p>
-   ${ETS.map((e,i)=>etp(e,i)).join('')}</div></div>
+  <div class="stack" style="margin-top:12px">${etp(ETS[0],0)}
+   <details class="maisetp"><summary>Ver as 8 etapas</summary><div class="stack" style="margin-top:8px">${ETS.slice(1).map((e,i)=>etp(e,i+1)).join('')}</div></details></div>
   ${troca()}
   <div class="jlinks">
    <details><summary>Meu diário${casNotes.length?' ('+casNotes.length+')':''} ›</summary><div class="jl-body">${casNotes.length?casNotes.map(([x,t])=>`<div style="margin-top:10px"><div class="small"><b>Dia ${x}${x>=2&&x<=4?' · Desafio: uma qualidade':''}</b>${dget('c1d'+x+'-data')?' · '+esc(dget('c1d'+x+'-data')):''}${x===5&&dget('c1-desafio')?' · Desafio: '+esc(dget('c1-desafio')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<p class="small" style="margin:6px 0 0">Suas anotações aparecem aqui. Ficam salvas só neste celular.</p>`}</div></details>
