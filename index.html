@@ -693,7 +693,7 @@ function ritmoHTML(passoTxt,passoGo){let L=[];try{L=JSON.parse(lsg('fvp-ritmo','
  const t=new Date();t.setHours(12,0,0,0);const dow=t.getDay();const N=['D','S','T','Q','Q','S','S'],NL=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];let n=0;
  const cells=N.map((nm,i)=>{const x=new Date(t);x.setDate(t.getDate()-dow+i);const f=L.includes(dloc(x));if(f)n++;const hj=i===dow;return `<div class="${hj?'hj':''}"><span aria-hidden="true">${nm}</span><i class="${f?'feito':hj?'hoje':''}" aria-label="${NL[i]}${f?', caminhou':''}"></i></div>`}).join('');
  const msg=n===0?'Sua semana começa no primeiro passo.':n===1?'Esta semana você caminhou 1 dia.':`Esta semana você caminhou ${n} dias.`;
- return `<div class="ritmo mini"><div class="top"><b>Seu ritmo</b><span>${msg}</span></div><div class="dias">${cells}</div></div>`}
+ return `<div class="ritmo"><div class="top"><b>Seu ritmo</b><span>${msg}</span></div><div class="dias">${cells}</div>${passoTxt?passoHTML(passoTxt).replace(/^<div class="ritmo passobox">/,'').replace(/<\/div>$/,''):''}</div>`}
 function passoHTML(passoTxt){return `<div class="ritmo passobox">${passoTxt?`<details class="passo"><summary><span class="ic" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--deep)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.5 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.5 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg></span><span class="pk">Seu passo de hoje<span class="psub"> · um gesto para aproximar</span></span><span class="ar" aria-hidden="true">›</span></summary><div class="pt">${passoTxt}</div></details>`:''}</div>`}
 const PARTES={1:[['Antes de começar · reflexão','1 min'],['Estudo','4 min'],['Vídeo do Mentor','1 min'],['Perguntas para pensar','3 min'],['Dinâmica "Por que eu disse sim"','10 min'],['Passo possível','2 min']],
  2:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],3:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],4:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],
@@ -825,10 +825,9 @@ const R={
   if(tget()==='id'){
    const IF=idFeitos();let ni=[0,1,2].find(x=>!IF.includes(x));const allId=ni==null;if(allId)ni=0;const [it,ir]=ENC[ni];
    const igo=`data-go="encounter" data-track="id" data-enc="${ni}"`;
-   view.innerHTML=`${saudHTML()}
+   view.innerHTML=`${saudHTML()}${ritmoHTML(null)}
    <div class="prox hojec"><div class="vid"><span class="vk">Estudo ${ni+1} de 3</span><span class="vt">${it}</span>${VB}</div>
     <div class="info"><p class="lead">${ir}</p><button class="btn" style="width:100%" ${igo}>Abrir o estudo</button></div></div>
-   ${ritmoHTML(null,'')}
    <h3 class="t jt">Minha jornada</h3>
    <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div></div>
    <div class="stack" style="margin-top:12px">
@@ -845,11 +844,9 @@ const R={
   const ETS=[['A ideia foi de Deus','Gênesis 2.18-24'],...CICLOS];
   const PT=PARTES[d]||[];
   const etp=([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Etapa<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z} · ${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`};
-  view.innerHTML=`${saudHTML(1)}
+  view.innerHTML=`${saudHTML(1)}${ritmoHTML(passoHoje(d))}
   <div class="prox hojec"><div class="vid"><span class="vk">Hoje · Dia ${d} de 40</span><span class="vt">${DN[d].split(' · ')[1]||DN[d]}</span>${VB}</div>
    <div class="info">${d===1?`<p class="lead">Estudo · cerca de ${somaMin(PT)} min. Siga na ordem: cada tela prepara a próxima.</p><button class="btn" style="width:100%" ${open}>Começar o estudo</button>`:`<p class="lead">${DN[d].split(' · ')[0]} · cerca de ${somaMin(PT)} min. Toque numa parte, na ordem que quiser.</p>${prowsHTML(d)}`}</div></div>
-  ${passoHTML(passoHoje(d))}
-  ${ritmoHTML(null,'')}
   <h3 class="t jt">Minha jornada</h3>
   <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div></div>
   <div class="stack" style="margin-top:12px">${etp(ETS[0],0)}
