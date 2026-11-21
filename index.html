@@ -635,7 +635,7 @@ function ritmoHTML(passoTxt,passoGo){let L=[];try{L=JSON.parse(lsg('fvp-ritmo','
  const msg=n===0?'Sua semana começa no primeiro passo.':n===1?'Esta semana você caminhou 1 dia.':`Esta semana você caminhou ${n} dias.`;
  return `<div class="ritmo"><div class="top"><b>Seu ritmo</b><span>${msg}</span></div><div class="dias">${cells}</div><button class="passo" ${passoGo}><span class="ic" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 1.5v9l7-4.5z" fill="var(--deep)"/></svg></span><span><span class="pk">Seu passo de hoje</span><div class="pt">${passoTxt}</div></span><span class="ar" aria-hidden="true">›</span></button></div>`}
 const PARTES={1:[['Antes de começar · reflexão','1 min'],['Estudo','4 min'],['Vídeo do Mentor','1 min'],['Perguntas para pensar','3 min'],['Dinâmica "Por que eu disse sim"','10 min'],['Passo possível','2 min']],
- 2:[['Palavra do dia','1 min'],['Desafio','2 min'],['Meu diário','2 min']],3:[['Palavra do dia','1 min'],['Desafio','2 min'],['Meu diário','2 min']],4:[['Palavra do dia','1 min'],['Desafio','2 min'],['Meu diário','2 min']],
+ 2:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],3:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],4:[['Palavra do dia','1 min'],['Desafio e escrita','4 min']],
  5:[['Palavra do dia','1 min'],['Como foi o desafio?','1 min'],['O que você percebeu','2 min']]};
 const PASSO={1:'Volte ao começo: procure uma foto do início da história de vocês.',2:'Escreva no diário uma qualidade que fez você escolher essa pessoa.',3:'Escreva mais uma qualidade dessa pessoa no seu diário.',4:'Uma última qualidade. Se quiser, conte uma delas ao outro.',5:'Dia de pausa: olhe para trás e veja como foi o desafio.'};
 const partesHTML=(L)=>`<ul class="partes">${L.map(([a,b])=>`<li>${a}<span>${b}</span></li>`).join('')}</ul>`;
@@ -657,7 +657,7 @@ const PICON={pal:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" st
  des:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg>',
  dia:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 7l3 3"/></svg>',
  como:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>'};
-const PDEF={2:[['Palavra do dia','1 min','pal'],['Desafio','2 min','des'],['Meu diário','2 min','dia']],5:[['Palavra do dia','1 min','pal'],['Como foi o desafio?','1 min','como'],['O que você percebeu','2 min','dia']]};
+const PDEF={2:[['Palavra do dia','1 min','pal'],['Desafio e escrita','4 min','des']],5:[['Palavra do dia','1 min','pal'],['Como foi o desafio?','1 min','como'],['O que você percebeu','2 min','dia']]};
 const pdef=d=>d>=5?PDEF[5]:PDEF[2];
 function partesFeitas(d){let o={};try{o=JSON.parse(lsg('fvp-partes','{}'))}catch(e){}return feitos().includes(d)?[0,1,2]:(o[d]||[])}
 function marcaParte(d,i){let o={};try{o=JSON.parse(lsg('fvp-partes','{}'))}catch(e){}const L=o[d]||[];if(!L.includes(i))L.push(i);o[d]=L;lss('fvp-partes',JSON.stringify(o));if(L.length>=pdef(d).length)markDone(d);else ritmoMark()}
@@ -778,7 +778,7 @@ const R={
    <div><div class="steplabel" style="margin-top:4px">As 8 etapas</div><p class="small" style="margin:4px 0 6px">Cada etapa tem 5 dias. Toque numa etapa para ver os dias.</p>
    ${ETS.map(([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Etapa<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z} · ${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`}).join('')}</div>
    ${troca('Casamento')}
-   <div class="card"><div class="steplabel">Meu diário</div>${casNotes.length?casNotes.map(([x,t])=>`<div style="margin-top:10px"><div class="small"><b>Dia ${x}</b>${x===5&&dget('c1-desafio')?' · Desafio: '+esc(dget('c1-desafio')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<p class="small" style="margin-top:6px">Suas anotações aparecem aqui. Ficam salvas só neste celular.</p>`}</div>
+   <div class="card"><div class="steplabel">Meu diário</div>${casNotes.length?casNotes.map(([x,t])=>`<div style="margin-top:10px"><div class="small"><b>Dia ${x}${x>=2&&x<=4?' · Desafio: uma qualidade':''}</b>${dget('c1d'+x+'-data')?' · '+esc(dget('c1d'+x+'-data')):''}${x===5&&dget('c1-desafio')?' · Desafio: '+esc(dget('c1-desafio')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<p class="small" style="margin-top:6px">Suas anotações aparecem aqui. Ficam salvas só neste celular.</p>`}</div>
    <div class="curio"><div class="lb">Você sabia?</div><p class="cq">${CU.q}</p><details><summary>Ver a resposta</summary><p>${CU.a}</p><p>${CU.b}</p></details><p class="cn">Uma curiosidade sobre o casamento a cada dia.</p></div>
    <details class="card"><summary style="font-weight:700;cursor:pointer">Guardado · Módulo 01 "Você não é um acidente"</summary>
     <p class="small" style="margin:8px 0 4px">Estudos de identidade, guardados para depois do piloto.</p>
@@ -789,12 +789,13 @@ const R={
  parte(){
   const d=Math.min(5,Math.max(2,state.day||2)),i=state.parte||0,P=PAL[d],[nm]=pdef(d)[i];let body;
   if(i===0)body=`${lab('Palavra do dia')}<h3 class="t">${P.t}</h3><p class="verse">${P.q}</p><p class="small" style="margin-top:-4px">${P.ref}</p><details class="ctx" style="margin-top:10px"><summary style="font-weight:700;cursor:pointer">Saiba mais sobre este texto</summary><p style="margin-top:8px">${P.ctx}</p></details>`;
-  else if(d<5&&i===1)body=`${lab('Desafio · dias 2 a 4')}<h3 class="t">Uma qualidade</h3>${big(`Escreva no seu diário ${DESAFIO[d]} qualidade que fez você escolher essa pessoa.`)}<p class="sub">${d<4?'Amanhã, mais uma.':'Se quiser, conte uma delas ao outro.'}</p>`;
-  else if(d<5)body=`${lab('Meu diário')}<h3 class="t">Escreva com calma</h3>${diaryBox('c1d'+d,'Uma qualidade, e por que ela chamou sua atenção.','Meu diário',1)}`;
+  else if(d<5)body=`${lab('Desafio · dias 2 a 4')}<div class="card suggest" style="margin-top:8px"><h3 class="t" style="margin:0 0 6px">Uma qualidade</h3><p style="margin:0;font-size:1.05rem;line-height:1.5">Escreva ${DESAFIO[d]} qualidade que fez você escolher essa pessoa.</p><p class="small" style="margin:8px 0 0">${d<4?'Amanhã, mais uma.':'Se quiser, conte uma delas ao outro.'}</p></div>
+   <textarea class="diaryTxt" data-k="c1d${d}" rows="7" aria-label="Escrever sobre o desafio" placeholder="Escreva com calma, só você vai ler." style="width:100%;margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;font:inherit;font-size:1rem;line-height:1.55;background:var(--paper);color:inherit;resize:vertical;box-sizing:border-box">${esc(dget('c1d'+d))}</textarea>
+   <p class="small" style="margin-top:6px">Opcional. Salva sozinho neste celular e aparece em Meu diário, na sua jornada.</p>`;
   else if(i===1){const pick=dget('c1-desafio');body=`${lab('Dia de descanso')}<h3 class="t">Como foi o desafio?</h3><div class="stack" style="gap:8px;margin-top:10px">${['Fiz','Fiz em parte','Ainda não'].map(o=>`<button class="opt" data-pick="${o}" aria-pressed="${pick===o}">${o}</button>`).join('')}</div>${pick==='Ainda não'?'<p style="margin:10px 0 0">Tudo bem. O desafio continua disponível.</p>':''}`}
   else body=`${lab('Dia de descanso')}<h3 class="t">O que você percebeu?</h3>${diaryBox('c1d5','O que mudou em você, mesmo que pouco.','Meu diário',1)}`;
   const ok=partesFeitas(d).includes(i);
-  view.innerHTML=`<div class="small" style="margin-top:4px">Etapa 1 de 8 · Dia ${d} · ${nm}</div><div class="steps" style="grid-template-columns:repeat(3,1fr)">${[0,1,2].map(k=>`<i class="${partesFeitas(d).includes(k)||k===i?'on':''}"></i>`).join('')}</div>`+body+`<div class="navrow"><button class="btn ghost" data-go="journey">Jornada</button><button class="btn" id="fimParte">${ok?'Feito ✓':'Concluir esta parte'}</button></div>`;
+  view.innerHTML=`<div class="small" style="margin-top:4px">Etapa 1 de 8 · Dia ${d} · ${nm}</div><div class="steps" style="grid-template-columns:repeat(${pdef(d).length},1fr)">${pdef(d).map((_,k)=>`<i class="${partesFeitas(d).includes(k)||k===i?'on':''}"></i>`).join('')}</div>`+body+`<div class="navrow"><button class="btn ghost" data-go="journey">Jornada</button><button class="btn" id="fimParte">${ok?'Feito ✓':'Concluir esta parte'}</button></div>`;
   bindDiary();
   view.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{dset('c1-desafio',b.dataset.pick);R.parte()});
   $('#fimParte').onclick=()=>{marcaParte(d,i);go('journey')};
@@ -906,7 +907,7 @@ const ENCS=[
 ];
 let STEPS=[];
 const diaryBox=(k,ph,label,op)=>`<details class="ctx" style="margin-top:12px" ${op||dget(k)?'open':''}><summary style="font-weight:700;cursor:pointer">${label||'Escrever no meu diário'}</summary><textarea class="diaryTxt" data-k="${k}" rows="5" aria-label="Meu diário" placeholder="${ph||'Escreva o que vier. Ninguém mais vai ler.'}" style="width:100%;margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:12px;font:inherit;font-size:1rem;line-height:1.5;background:var(--paper);color:inherit;resize:vertical;box-sizing:border-box">${esc(dget(k))}</textarea><p class="small" style="margin-top:6px">Fica salvo só neste celular.</p></details>`;
-const bindDiary=()=>view.querySelectorAll('.diaryTxt').forEach(t=>t.oninput=e=>dset(t.dataset.k,e.target.value));
+const bindDiary=()=>view.querySelectorAll('.diaryTxt').forEach(t=>t.oninput=e=>{dset(t.dataset.k,e.target.value);dset(t.dataset.k+'-data',new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}))});
 function renderStep(){
   state.started=true;
   const cas=state.track==='cas', i=state.enc||0;
