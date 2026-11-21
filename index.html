@@ -832,9 +832,8 @@ const R={
     <div class="info"><p class="lead">${ir}</p><button class="btn" style="width:100%" ${igo}>Abrir o estudo</button></div></div>
    <h3 class="t jt">Minha jornada</h3>
    <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div></div>
-   <div class="stack" style="margin-top:12px">
-   ${ENC.map(([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?(IF.includes(i)?'✓ Feito':'Abrir'):'Em breve'}</span></button>`).join('')}
-   <p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div>
+   ${(()=>{const eb=([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?(IF.includes(i)?'✓ Feito':i===ni?'Agora ›':'Abrir'):'Em breve'}</span></button>`;
+    return `<div class="stack" style="margin-top:12px">${eb(ENC[ni],ni)}<details class="maisetp"><summary>Ver os ${ENC.length} estudos</summary><div class="stack" style="margin-top:8px">${ENC.map((e,i)=>i===ni?'':eb(e,i)).join('')}<p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div></details></div>`})()}
    ${troca()}
    <div class="jlinks"><button data-go="favs">Guardados${favs().length?' ('+favs().length+')':''} ›</button><button data-go="welcome">Sua jornada: Quem eu sou · Trocar ›</button></div>`;
    bindSaud();return;
