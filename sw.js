@@ -1,5 +1,5 @@
-// versão 54c2073fb7: sempre busca a versão nova; sem internet, usa a guardada
-const C='fvp-54c2073fb7';
+// versão 02594023be: sempre busca a versão nova; sem internet, usa a guardada
+const C='fvp-02594023be';
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(['./','index.html','manifest.webmanifest'])))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==C).map(n=>caches.delete(n)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;
