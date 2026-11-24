@@ -488,6 +488,13 @@ details.maisetp .fe{display:none}details.maisetp[open] .fe{display:inline}detail
 .vplayer .fr{aspect-ratio:16/9;border-radius:14px;background:linear-gradient(160deg,#2B5F5A,#0F2624);display:grid;place-items:center}
 .vplayer .fr i{width:58px;height:58px;border-radius:50%;border:1.5px solid rgba(243,238,229,.8);display:grid;place-items:center}
 .vplayer .fr i:after{content:"";border-left:16px solid #F3EEE5;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+
+.atalhos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 16px}
+.atalhos button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px 10px;border:1px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink);font:600 .78rem var(--body);cursor:pointer;position:relative}
+.atalhos svg{width:22px;height:22px;stroke:var(--deep);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.atalhos .ct{font-weight:500;color:var(--soft);font-size:.7rem}
+.atalhos .novo{position:absolute;top:8px;right:10px;width:7px;height:7px;border-radius:50%;background:var(--dawn)}
+.dentry{border-top:1px solid var(--line);padding:12px 0}
 </style>
 <style id="modo-app">
 .notes{display:none!important}
@@ -549,7 +556,7 @@ const view = $('#view'), tabs = $('#tabs'), screen = $('#screen'), slot = $('#co
 const WHY = {
   welcome:{n:'1 · Boas-vindas',h:'Entrada sem cadastro',p:'Acolher em 10 segundos e deixar claro o que o app é e o que não é.',c:'Frase-mestra, três promessas simples e um aviso honesto. Um botão só: "Começar".',i:'Fase 1 não pede nome, e-mail nem senha. Nada é guardado.',j:'A pessoa entra sem medo de ser julgada ou exposta.'},
   copia:{n:'Cópia da jornada',h:'Trocar de celular sem perder nada',p:'Sem cadastro, tudo fica só no celular. Se a pessoa troca de aparelho, perderia o caminho.',c:'Faz um arquivo com o que está salvo (progresso, nome, ritmo, guardados, diário). A pessoa guarda ou manda para si no WhatsApp e restaura no celular novo. Nada vai para servidor.'},
-  favs:{n:'Guardados',h:'Versículos e frases guardados',p:'O que tocou a pessoa fica à mão.',c:'Coração ao lado de versículos e citações. Salvo só no celular.'},
+  diario:{n:'Meu diário',h:'O que a pessoa escreveu',p:'Anotações ficavam escondidas no fim da tela.',c:'Atalho no alto da jornada. Salvo só no celular.'},sabia:{n:'Você sabia?',h:'Uma curiosidade por dia',p:'Ficava escondida no fim da tela.',c:'Atalho no alto da jornada, com ponto quando há curiosidade nova.'},favs:{n:'Guardados',h:'Versículos e frases guardados',p:'O que tocou a pessoa fica à mão.',c:'Coração ao lado de versículos e citações. Salvo só no celular.'},
  parte:{n:'Parte do dia',h:'Uma parte do dia de cada vez',p:'Dias 2 a 5 em partes curtas, na ordem que a pessoa quiser.',c:'Palavra do dia, desafio e diário. Com as 3 partes feitas, o dia se marca sozinho.'},
  portal:{n:'1a · Portal da jornada',h:'Uma tela de impacto ao escolher a jornada',p:'Escolher a porta precisa ter peso.',c:'Casamento: alianças e "Amar é uma decisão." Quem eu sou: broto e "Você não é um acidente." Aparece só na primeira vez de cada jornada.'},
   season:{n:'1b · Estação',h:'Em que estação da vida você está?',p:'Cada pessoa vive um momento diferente: casada junto, casada sozinha ou separada. O app não deve supor qual é.',c:'A pessoa escolhe entre inverno, primavera, verão e outono. A escolha muda as cores do app e mostra uma mensagem de encorajamento da estação, que também fica na tela Hoje. A cada dia aparece uma mensagem diferente (7 por estação, em rodízio guardado no celular). O banco mistura versículos (com contexto) e frases, sempre sem prometer resultado. Fica salva só no celular e pode ser trocada a qualquer momento.',i:'Inverno é frio, mas com abrigo, nunca escuro. Outono é maturidade e colheita, nunca fim.',j:'Base: Eclesiastes 3.1, para tudo há uma ocasião.'},
@@ -614,7 +621,7 @@ function go(k){
   slot.innerHTML='';
   const full = k==='welcome'||k==='season'||k==='seasonmsg'||k==='portal';
   tabs.hidden = full; $('#topbar').style.visibility = full?'hidden':'visible';
-  [...tabs.children].forEach(b=>b.setAttribute('aria-current', b.dataset.go===k || ((k==='encounter'||k==='day'||k==='etapa'||k==='parte'||k==='favs'||k==='copia')&&b.dataset.go==='journey')));
+  [...tabs.children].forEach(b=>b.setAttribute('aria-current', b.dataset.go===k || ((k==='encounter'||k==='day'||k==='etapa'||k==='parte'||k==='favs'||k==='copia'||k==='diario'||k==='sabia')&&b.dataset.go==='journey')));
   {const tab=[...tabs.children].some(b=>b.dataset.go===k);if(CURV&&CURV!==k)PREVV=CURV;CURV=k;const bt=document.getElementById('backTop');if(bt){bt.hidden=full||tab;bt.onclick=()=>go(PREVV&&PREVV!==k&&PREVV!=='welcome'?PREVV:'journey')}}
   renderWhy(k);
   R[k]();
@@ -878,7 +885,7 @@ const R={
   const ETS=[['A ideia foi de Deus','Gênesis 2.18-24'],...CICLOS];
   const PT=PARTES[d]||[];
   const etp=([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Etapa<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z} · ${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`};
-  view.innerHTML=`${saudHTML(1)}
+  view.innerHTML=`${saudHTML(1)}${atalhosHTML()}
   <h3 class="t jt">Minha jornada</h3>
   <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div>${vidCard('cas-e1','Etapa 1 · A ideia foi de Deus','Sobre esta etapa: A ideia foi de Deus',3)}</div>
   <div class="stack" style="margin-top:12px">${etp(ETS[0],0)}
@@ -888,9 +895,6 @@ const R={
    <div class="info">${d===1?`<p class="lead">Estudo · cerca de ${somaMin(PT)} min. Siga na ordem: cada tela prepara a próxima.</p><button class="btn" style="width:100%" ${open}>Começar o estudo</button>`:`<p class="lead">${DN[d].split(' · ')[0]} · cerca de ${somaMin(PT)} min. Toque numa parte, na ordem que quiser.</p>${prowsHTML(d)}`}</div></div>
   ${troca()}
   <div class="jlinks">
-   <details><summary>Meu diário${casNotes.length?' ('+casNotes.length+')':''} ›</summary><div class="jl-body">${casNotes.length?casNotes.map(([x,t])=>`<div style="margin-top:10px"><div class="small"><b>Dia ${x}${x>=2&&x<=4?' · Desafio: uma qualidade':''}</b>${dget('c1d'+x+'-data')?' · '+esc(dget('c1d'+x+'-data')):''}${x===5&&dget('c1-desafio')?' · Desafio: '+esc(dget('c1-desafio')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<p class="small" style="margin:6px 0 0">Suas anotações aparecem aqui. Ficam salvas só neste celular.</p>`}</div></details>
-   <details><summary>Você sabia? ›</summary><div class="jl-body curio" style="margin-top:8px"><p class="cq">${CU.q}</p><details><summary>Ver a resposta</summary><p>${CU.a}</p><p>${CU.b}</p></details><p class="cn">Uma curiosidade sobre o casamento a cada dia.</p></div></details>
-   <button data-go="favs">Guardados${favs().length?' ('+favs().length+')':''} ›</button>
    <button data-go="copia">Cópia da minha jornada ›</button>
    <button data-go="welcome">Sua jornada: Casamento · Trocar ›</button>
   </div>`;
@@ -933,6 +937,16 @@ const R={
    $('#cpSim').onclick=()=>{try{Object.keys(keys()).forEach(k=>localStorage.removeItem(k));Object.entries(d.itens).forEach(([k,v])=>{if(k.startsWith('fvp-')&&typeof v==='string')localStorage.setItem(k,v)})}catch(_){}
     box.innerHTML='<p style="margin:12px 0 0"><b>Sua jornada voltou.</b> Bem-vindo de volta.</p><button class="btn" id="cpIr" style="width:100%;margin-top:10px">Abrir minha jornada</button>';$('#cpIr').onclick=()=>location.reload()}};
    rd.readAsText(fl)};
+ },
+ diario(){
+  const N=casNotesAll();
+  view.innerHTML=`<h3 class="t" style="margin-top:6px">Meu diário</h3><p class="sub">O que você escreveu na jornada. Fica salvo só neste celular.</p>
+  ${N.length?N.map(([x,t])=>`<div class="dentry"><div class="small"><b>Dia ${x}${x>=2&&x<=4?' · Desafio: uma qualidade':''}</b>${dget('c1d'+x+'-data')?' · '+esc(dget('c1d'+x+'-data')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<div class="card" style="margin-top:10px"><p style="margin:0">Ainda não há anotações.</p><p class="small" style="margin:6px 0 0">Nos dias da jornada, o que você escrever aparece aqui.</p></div>`}`;
+ },
+ sabia(){
+  const CU=curioMsg();try{localStorage.setItem('fvp-sabia-visto',new Date().toISOString().slice(0,10))}catch(e){}
+  view.innerHTML=`<h3 class="t" style="margin-top:6px">Você sabia?</h3><p class="sub">Uma curiosidade sobre o casamento a cada dia.</p>
+  <div class="card curio" style="margin-top:10px"><p class="cq" style="font-family:var(--display);font-size:1.2rem;line-height:1.35;margin:0">${CU.q}</p><details style="margin-top:12px"><summary style="font-weight:700;cursor:pointer">Ver a resposta</summary><p>${CU.a}</p><p>${CU.b}</p></details></div>`;
  },
  favs(){
   const F=favs();
@@ -1156,6 +1170,11 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-vid]');if(
  $('#vclose').onclick=()=>{try{localStorage.setItem(VIDK(k),'1')}catch(x){};$('#vplayer').remove();go('journey')}},true);
 const etAberto=()=>{let v=null;try{v=localStorage.getItem('fvp-etapas-fechado')}catch(e){}return v==='1'?'':'open'};
 document.addEventListener('toggle',e=>{const d=e.target;if(d.classList&&d.classList.contains('maisetp')){try{localStorage.setItem('fvp-etapas-fechado',d.open?'0':'1')}catch(x){}}},true);
+
+const casNotesAll=()=>[1,2,3,4,5].map(x=>[x,x===1?[dget('c1d1'),dget('c1d1sim1'),dget('c1d1sim2'),dget('c1d1sim3')].filter(y=>y&&y.trim()).join(' · '):dget('c1d'+x)]).filter(x=>x[1].trim());
+const sabiaVisto=()=>{let v='';try{v=localStorage.getItem('fvp-sabia-visto')||''}catch(e){}return v===new Date().toISOString().slice(0,10)};
+function atalhosHTML(){const n=casNotesAll().length,g=favs().length;
+ return `<div class="atalhos"><button data-go="diario"><svg viewBox="0 0 24 24"><path d="M6 3h11a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6z"/><path d="M6 3v18"/><path d="M10 8h5M10 12h5"/></svg><span>Meu diário</span><span class="ct">${n?n+(n>1?' anotações':' anotação'):'Escrever'}</span></button><button data-go="sabia">${sabiaVisto()?'':'<i class="novo" aria-label="novo"></i>'}<svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span>Você sabia?</span><span class="ct">1 por dia</span></button><button data-go="favs"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Guardados</span><span class="ct">${g?g:'Nenhum ainda'}</span></button></div>`}
 function closeOverlays(){['#crisis','#sb'].forEach(s=>{const e=$(s);if(e)e.remove()})}
 
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g||g.getAttribute('aria-disabled')==='true')return;
