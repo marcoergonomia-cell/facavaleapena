@@ -613,7 +613,7 @@ function filme(t){
   const fim=()=>{if(!el.isConnected||el.classList.contains('sai'))return;clearTimeout(tm);el.classList.add("sai");setTimeout(()=>el.remove(),1600)};
   const f1=el.querySelector('.f1'),f2=el.querySelector('.f2'),ce=el.querySelector('.cena'),bv=el.querySelector('.bv');[f2,ce,bv].forEach(x=>x.hidden=true);
   /* um passo por vez: 0 frase 1, 1 frase 2, 2 cena, 3 cena + boas-vindas */
-  const PASSOS=[[f1],[f2],[ce],[ce,bv]],DUR=[2000,2000,1200,2000];let i=-1,tm=null;
+  const PASSOS=[[f1],[f2],[ce],[ce,bv]],DUR=[2000,2000,1200,3000];let i=-1,tm=null;
   const passo=(n,toque)=>{clearTimeout(tm);if(n>=PASSOS.length){fim();return}
    const vis=PASSOS[n];
    /* quem sai: no toque some na hora; no automático apaga devagar e depois sai da tela */
