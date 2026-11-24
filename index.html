@@ -549,6 +549,50 @@ body.cor-tsuave .nomod .ritmo.topo .dias i.feito::after{border-color:#fff}
 body.cor-tsuave .nomod .ritmo.topo .dias i.hoje{background-color:#fff;border-color:#B8862E}
 body.cor-tsuave .mvid .th{background:linear-gradient(160deg,#2B5F5A,#0F2624)}
 body.cor-tsuave .mvid{color:#F3EEE5}
+
+/* polimento do vídeo do Mentor (24/11) */
+.mod .mvid:not(.ok){border-radius:16px;box-shadow:0 8px 22px rgba(0,0,0,.28);background:none}
+.mod .mvid:not(.ok) .th{background:radial-gradient(120% 90% at 78% 18%,rgba(232,194,122,.38),rgba(232,194,122,0) 55%),radial-gradient(80% 70% at 10% 100%,rgba(0,0,0,.45),transparent 60%),linear-gradient(160deg,#2A625C 0%,#173E3A 55%,#0E2422 100%);overflow:hidden}
+.mod .mvid:not(.ok) .th::before{content:"";position:absolute;right:-6%;top:6%;width:52%;aspect-ratio:1;background:url(aliancas-entrelacadas.png) center/contain no-repeat;opacity:.22;filter:saturate(.8)}
+.mod .mvid[data-vid^="id-"]:not(.ok) .th::before{background-image:url(broto.svg);opacity:.18}
+.mod .mvid:not(.ok) .th::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(243,238,229,.08)}
+.mod .mvid:not(.ok) .th i{position:relative;z-index:1;width:50px;height:50px;background:rgba(250,244,234,.96);box-shadow:0 0 0 6px rgba(232,194,122,.22),0 6px 16px rgba(0,0,0,.35);transition:transform .2s ease}
+.mod .mvid:not(.ok) .th i:after{border-left:15px solid #1F4E4A;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.mod .mvid:not(.ok):active .th i{transform:scale(.94)}
+@media (prefers-reduced-motion:no-preference){.mod .mvid:not(.ok) .th i{animation:vpulse 2.4s ease-out 1s 2}}
+.mod .mvid:not(.ok) .th{aspect-ratio:16/7.4}
+.mod .mvid:not(.ok) .th i{position:absolute;right:14px;bottom:16px;margin:0!important;width:50px;height:50px;z-index:2}
+.mod .mvid:not(.ok) .th em{top:12px;left:12px;right:auto;bottom:auto}
+.mod .mvid:not(.ok) .tx{padding:34px 76px 14px 14px}
+.mod .mvid:not(.ok) .th::before{right:auto;left:38%;top:-4%;width:58%;opacity:.2}
+@keyframes vpulse{0%{box-shadow:0 0 0 0 rgba(232,194,122,.45),0 6px 16px rgba(0,0,0,.35)}70%{box-shadow:0 0 0 14px rgba(232,194,122,0),0 6px 16px rgba(0,0,0,.35)}100%{box-shadow:0 0 0 6px rgba(232,194,122,.22),0 6px 16px rgba(0,0,0,.35)}}
+.mod .mvid:not(.ok) .th em{z-index:1;background:rgba(0,0,0,.38);backdrop-filter:blur(4px);border:1px solid rgba(243,238,229,.18);font-weight:600}
+.mod .mvid:not(.ok) .tx{z-index:1;padding:28px 14px 12px;background:linear-gradient(transparent,rgba(6,18,17,.78))}
+.mod .mvid:not(.ok) .tx b{font-family:var(--display);font-weight:400;font-size:1.18rem;letter-spacing:.005em}
+.mod .mvid:not(.ok) .tx span{color:#E8C27A;opacity:1;font-size:.78rem;font-weight:600;letter-spacing:.02em}
+.mod .mvid:not(.ok) .tx{padding:34px 74px 14px 14px!important}
+.mod .mvid:not(.ok) .tx b{font-size:1.08rem!important;white-space:nowrap}
+.mod .mvid:not(.ok) .th em{top:12px!important;left:12px!important;right:auto!important;bottom:auto!important}
+.mod .mvid:not(.ok) .th i{width:46px!important;height:46px!important;right:14px;bottom:18px}
+.mod{padding:14px 16px 14px}
+.mod h4{margin:2px 0 6px}
+.mod .prog{margin-top:0}
+.nomod{margin-top:8px!important;padding-top:6px!important}
+.nomod .ritmo.topo .dias div{font-size:.5rem}
+.nomod .ritmo.topo .dias i{width:17px!important;height:17px!important;margin-top:2px}
+.nomod .ritmo.topo .dias i.hoje{width:21px!important;height:21px!important}
+.mod .mvid:not(.ok){margin-top:10px}
+.mod .mvid:not(.ok) .th{aspect-ratio:2.35/1!important}
+.mod .mvid:not(.ok) .tx{padding:20px 70px 10px 14px!important}
+.mod .mvid:not(.ok) .tx span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.mod .mvid:not(.ok) .th em{top:10px!important;left:10px!important;font-size:.66rem!important;padding:1px 7px!important}
+.mod .mvid:not(.ok) .th i{bottom:50%!important;transform:translateY(50%);right:14px!important}
+.mod .mvid:not(.ok):active .th i{transform:translateY(50%) scale(.94)}
+.mod .mvid:not(.ok) .th i{left:14px!important;right:auto!important;bottom:14px!important;transform:none}
+.mod .mvid:not(.ok):active .th i{transform:scale(.94)}
+.mod .mvid:not(.ok) .tx{padding:20px 12px 12px 72px!important;min-height:46px}
+.mod .mvid:not(.ok) .tx b{font-size:1.02rem!important}
+.mod .mvid:not(.ok) .th em{left:auto!important;right:10px!important}
 </style>
 <style id="modo-app">
 .notes{display:none!important}
@@ -927,7 +971,7 @@ const R={
    const igo=`data-go="encounter" data-track="id" data-enc="${ni}"`;
    view.innerHTML=`${saudHTML()}
    <h3 class="t jt">Minha jornada</h3>
-   <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div><div class="nomod">${ritmoTopo()}</div>${vidCard('id-'+ni,'Estudo '+(ni+1)+' · '+it,'Sobre este estudo: '+it,3)}</div>
+   <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div><div class="nomod">${ritmoTopo()}</div>${vidCard('id-'+ni,'Estudo '+(ni+1)+' · '+it,'Estudo '+(ni+1)+' · '+it,3)}</div>
    ${(()=>{const eb=([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?(IF.includes(i)?'✓ Feito':i===ni?'Agora ›':'Abrir'):'Em breve'}</span></button>`;
     return `<div class="stack" style="margin-top:12px">${eb(ENC[ni],ni)}<details class="maisetp" ${etAberto()}><summary><span class="ab">Ver os ${ENC.length} estudos</span><span class="fe">Recolher os estudos</span></summary><div class="stack" style="margin-top:8px">${ENC.map((e,i)=>i===ni?'':eb(e,i)).join('')}<p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div></details></div>`})()}
    <div class="prox hojec"><button class="vid vidbtn" ${igo}><span class="vk">Seu estudo de hoje · Estudo ${ni+1} de 3</span><span class="vt">${it}</span><span class="vgo">Começar ›</span></button>
@@ -944,7 +988,7 @@ const R={
   const etp=([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Etapa<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z} · ${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`};
   view.innerHTML=`${saudHTML(1)}${atalhosHTML()}
   <h3 class="t jt">Minha jornada</h3>
-  <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div><div class="nomod">${ritmoTopo()}</div>${vidCard('cas-e1','Etapa 1 · A ideia foi de Deus','Sobre esta etapa: A ideia foi de Deus',3)}</div>
+  <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div><div class="nomod">${ritmoTopo()}</div>${vidCard('cas-e1','Etapa 1 · A ideia foi de Deus','Etapa 1 · A ideia foi de Deus',3)}</div>
   <div class="stack" style="margin-top:12px">${etp(ETS[0],0)}
    <details class="maisetp" ${etAberto()}><summary><span class="ab">Ver as 8 etapas</span><span class="fe">Recolher as etapas</span></summary><div class="stack" style="margin-top:8px">${ETS.slice(1).map((e,i)=>etp(e,i+1)).join('')}</div></details></div>
   <div class="prox hojec"><button class="vid vidbtn" ${hojeGo(d,open)}><span class="vk">${HKIND[d]||'Hoje'} · Dia ${d} de 40</span><span class="vt">${DN[d].split(' · ')[1]||DN[d]}</span><span class="vtema">${TEMA[d]||''}</span><span class="vgo">Começar ›</span></button>
@@ -1219,7 +1263,7 @@ function sheet(){
 const VIDK=k=>'fvp-vid-'+k;
 function vidCard(k,tt,sub,min){let ok=false;try{ok=localStorage.getItem(VIDK(k))==='1'}catch(e){}
  return ok?`<button class="mvid ok" data-vid="${k}" data-vt="${tt}"><span class="th"><i></i></span><span class="tx"><b>✓ Palavra do Mentor assistida</b><span>Rever ›</span></span></button>`
- :`<button class="mvid" data-vid="${k}" data-vt="${tt}"><span class="th"><i></i><em>${min} min</em></span><span class="tx"><b>Uma palavra do Mentor</b><span>${sub}</span></span></button>`}
+ :`<button class="mvid" data-vid="${k}" data-vt="${tt}"><span class="th"><i></i><em>${min} min</em></span><span class="tx"><b>Palavra do Mentor</b><span>${sub}</span></span></button>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-vid]');if(!b)return;e.stopPropagation();
  const k=b.dataset.vid;screen.insertAdjacentHTML('beforeend',`<div class="vplayer" id="vplayer" role="dialog" aria-label="Vídeo do Mentor"><div class="small" style="color:#E8C27A;letter-spacing:.12em;text-transform:uppercase;font-weight:700">Palavra do Mentor</div><h3 class="t" style="color:#F3EEE5;margin:6px 0 14px">${b.dataset.vt}</h3><div class="fr"><i></i></div><button class="btn" style="margin-top:18px" id="vclose">Fechar</button></div>`);
  $('#vclose').onclick=()=>{try{localStorage.setItem(VIDK(k),'1')}catch(x){};$('#vplayer').remove();go('journey')}},true);
