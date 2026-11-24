@@ -547,11 +547,11 @@ const WHY = {
   journey:{n:'4 · Minha jornada',h:'Trilha do casamento: 40 dias',p:'Sem um caminho visível, a pessoa desanima.',c:'"40 dias de jornada a dois. Comece por você.": 8 etapas de 5 dias. Dia 1 é o estudo, dias 2 a 4 são palavra do dia + desafio, dia 5 é descanso com a anotação do desafio. O Módulo 01 de identidade fica guardado no fim da tela.',i:'Feita para a pessoa casada sozinha. O lado a dois é sempre opcional. A sequência nunca zera com culpa.',j:'Perseverança: a pessoa vê que está andando.'},
   encounter:{n:'Etapa 1 · Dia 1',h:'Estudo: A ideia foi de Deus',p:'Antes de falar de problemas, o casal precisa lembrar de onde começou.',c:'Abre com o encontro, traz a história do Mentor na varanda, Gn 2.18-23 em poucas telas e termina com uma pergunta e uma conversa a dois opcional.',i:'Nenhuma tela supõe que o casamento está bem ou mal, nem que o cônjuge participa.',j:'Fundamento: o casamento nasceu no coração de Deus.'},
   day:{n:'Etapa 1 · Dias 2 a 5',h:'Palavra do dia, desafio e descanso',p:'O estudo de um dia só se perde. A semana precisa de um passo pequeno por dia.',c:'Dias 2 a 4: uma palavra (NVI) e o desafio de escrever uma qualidade por dia que fez a pessoa escolher o cônjuge. Dia 5: descanso e a anotação "Como foi o desafio?" com "O que você percebeu?".',i:'Sem pontos e sem cobrança. "Ainda não" recebe só um "tudo bem". Nada sai do celular.',j:'Transforma o estudo em prática, um dia de cada vez.'},
-  mentor:{n:'Extra · Quem é o Mentor',h:'Uma tela à parte, para quem tiver curiosidade',p:'Algumas pessoas querem saber quem está por trás do app antes de confiar.',c:'Foto, uma frase, a história do Marquinho em poucas linhas, o livro e por que o app existe. Acesso discreto em Boas-vindas e no Assistente. Traz o espaço para pedir um horário com o Mentor pelo WhatsApp.',i:'Fica fora dos estudos. O livro não entra na caminhada. Nada de títulos técnicos.',j:'Dá rosto e confiança, sem desviar o foco da pessoa.'},
+  mentor:{n:'Extra · Sobre o Mentor',h:'Uma tela à parte, para quem tiver curiosidade',p:'Algumas pessoas querem saber quem está por trás do app antes de confiar.',c:'Foto, uma frase, a história do Marquinho em poucas linhas, o livro e por que o app existe. Acesso discreto em Boas-vindas e no Assistente. Traz o espaço para pedir um horário com o Mentor pelo WhatsApp.',i:'Fica fora dos estudos. O livro não entra na caminhada. Nada de títulos técnicos.',j:'Dá rosto e confiança, sem desviar o foco da pessoa.'},
   support:{n:'5 · Apoio humano',h:'Gente de verdade por perto',p:'IA não substitui pessoas nem atendimento de saúde.',c:'Urgência (192 / UPA), apoio emocional (CVV 188), seu líder ou grupo e onde buscar psicólogo.',i:'O botão "Ajuda" vermelho fica no topo de todas as telas.',j:'A jornada é com Deus e com comunidade, nunca sozinha.'}
 };
 const ORDER=['welcome','season','checkin','chat','journey','support','mentor'];
-const LABEL={welcome:'Boas-vindas',season:'Estação',seasonmsg:'Mensagem da estação',checkin:'Hoje',chat:'Dúvidas',journey:'Minha jornada',etapa:'Etapa',encounter:'Etapa 1 · Dia 1',day:'Dias 2 a 5',support:'Apoio humano',mentor:'Quem é o Mentor'};
+const LABEL={welcome:'Boas-vindas',season:'Estação',seasonmsg:'Mensagem da estação',checkin:'Hoje',chat:'Dúvidas',journey:'Minha jornada',etapa:'Etapa',encounter:'Etapa 1 · Dia 1',day:'Dias 2 a 5',support:'Apoio humano',mentor:'Sobre o Mentor'};
 
 function renderWhy(k){
   const w=WHY[k];
@@ -773,7 +773,7 @@ const R={
     <button class="season trilha" data-go="start" data-trilha="cas" aria-pressed="${tget()==='cas'}"><span class="ti"><img src="aliancas-entrelacadas.png" alt="" style="width:80px"></span><span class="tx"><b>Casamento</b><span class="tk">40 dias de jornada a dois</span><span class="small">Para cuidar do casamento, a dois ou começando por você.</span></span></button>
    </div>
    <p class="small" style="text-align:center;margin-top:16px">Não existe escolha errada.</p>
-   <button class="btn ghost" data-go="mentor" style="border:0;padding:6px;font-weight:600;font-size:.85rem;width:100%;margin-top:8px">Quem é o Mentor?</button></div>`;
+   <button class="btn ghost" data-go="mentor" style="border:0;padding:6px;font-weight:600;font-size:.85rem;width:100%;margin-top:8px">Sobre o Mentor</button></div>`;
  },
  portal(){
   const id=tget()==='id';
@@ -963,7 +963,7 @@ const R={
   view.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{dset('c1-desafio',b.dataset.pick);const y=view.scrollTop;R.day();view.scrollTop=y});
  },
  mentor(){
-  view.innerHTML=`<h3 class="t">Quem é o Mentor</h3>
+  view.innerHTML=`<h3 class="t">Sobre o Mentor</h3>
   <div class="stack">
    <div><div style="font-family:var(--display);font-size:1.2rem;margin-top:12px">Marco Aurélio, seu Mentor</div><div class="small">Marido, pai, casado há 23 anos (27 juntos) e líder de um grupo de casais.</div></div>
    <div class="card"><div class="steplabel">Minha história</div>
