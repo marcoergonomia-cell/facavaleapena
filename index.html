@@ -846,13 +846,14 @@ const R={
   if(tget()==='id'){
    const IF=idFeitos();let ni=[0,1,2].find(x=>!IF.includes(x));const allId=ni==null;if(allId)ni=0;const [it,ir]=ENC[ni];
    const igo=`data-go="encounter" data-track="id" data-enc="${ni}"`;
-   view.innerHTML=`${saudHTML()}${ritmoHTML(null)}
-   <div class="prox hojec"><div class="vid"><span class="vk">Estudo ${ni+1} de 3</span><span class="vt">${it}</span>${VB}</div>
-    <div class="info"><p class="lead">${ir}</p><button class="btn" style="width:100%" ${igo}>Abrir o estudo</button></div></div>
+   view.innerHTML=`${saudHTML()}
    <h3 class="t jt">Minha jornada</h3>
    <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div></div>
    ${(()=>{const eb=([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?(IF.includes(i)?'✓ Feito':i===ni?'Agora ›':'Abrir'):'Em breve'}</span></button>`;
     return `<div class="stack" style="margin-top:12px">${eb(ENC[ni],ni)}<details class="maisetp"><summary>Ver os ${ENC.length} estudos</summary><div class="stack" style="margin-top:8px">${ENC.map((e,i)=>i===ni?'':eb(e,i)).join('')}<p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div></details></div>`})()}
+   ${ritmoHTML(null)}
+   <div class="prox hojec"><div class="vid"><span class="vk">Estudo ${ni+1} de 3</span><span class="vt">${it}</span>${VB}</div>
+    <div class="info"><p class="lead">${ir}</p><button class="btn" style="width:100%" ${igo}>Abrir o estudo</button></div></div>
    ${troca()}
    <div class="jlinks"><button data-go="favs">Guardados${favs().length?' ('+favs().length+')':''} ›</button><button data-go="copia">Cópia da minha jornada ›</button><button data-go="welcome">Sua jornada: Quem eu sou · Trocar ›</button></div>`;
    bindSaud();return;
@@ -864,13 +865,14 @@ const R={
   const ETS=[['A ideia foi de Deus','Gênesis 2.18-24'],...CICLOS];
   const PT=PARTES[d]||[];
   const etp=([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Etapa<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z} · ${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`};
-  view.innerHTML=`${saudHTML(1)}${ritmoHTML(passoHoje(d))}
-  <div class="prox hojec"><div class="vid"><span class="vk">Hoje · Dia ${d} de 40</span><span class="vt">${DN[d].split(' · ')[1]||DN[d]}</span>${VB}</div>
-   <div class="info">${d===1?`<p class="lead">Estudo · cerca de ${somaMin(PT)} min. Siga na ordem: cada tela prepara a próxima.</p><button class="btn" style="width:100%" ${open}>Começar o estudo</button>`:`<p class="lead">${DN[d].split(' · ')[0]} · cerca de ${somaMin(PT)} min. Toque numa parte, na ordem que quiser.</p>${prowsHTML(d)}`}</div></div>
+  view.innerHTML=`${saudHTML(1)}
   <h3 class="t jt">Minha jornada</h3>
   <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div></div>
   <div class="stack" style="margin-top:12px">${etp(ETS[0],0)}
    <details class="maisetp"><summary>Ver as 8 etapas</summary><div class="stack" style="margin-top:8px">${ETS.slice(1).map((e,i)=>etp(e,i+1)).join('')}</div></details></div>
+  ${ritmoHTML(passoHoje(d))}
+  <div class="prox hojec"><div class="vid"><span class="vk">Hoje · Dia ${d} de 40</span><span class="vt">${DN[d].split(' · ')[1]||DN[d]}</span>${VB}</div>
+   <div class="info">${d===1?`<p class="lead">Estudo · cerca de ${somaMin(PT)} min. Siga na ordem: cada tela prepara a próxima.</p><button class="btn" style="width:100%" ${open}>Começar o estudo</button>`:`<p class="lead">${DN[d].split(' · ')[0]} · cerca de ${somaMin(PT)} min. Toque numa parte, na ordem que quiser.</p>${prowsHTML(d)}`}</div></div>
   ${troca()}
   <div class="jlinks">
    <details><summary>Meu diário${casNotes.length?' ('+casNotes.length+')':''} ›</summary><div class="jl-body">${casNotes.length?casNotes.map(([x,t])=>`<div style="margin-top:10px"><div class="small"><b>Dia ${x}${x>=2&&x<=4?' · Desafio: uma qualidade':''}</b>${dget('c1d'+x+'-data')?' · '+esc(dget('c1d'+x+'-data')):''}${x===5&&dget('c1-desafio')?' · Desafio: '+esc(dget('c1-desafio')):''}</div><p style="margin:4px 0 0;white-space:pre-wrap">${esc(t)}</p></div>`).join(''):`<p class="small" style="margin:6px 0 0">Suas anotações aparecem aqui. Ficam salvas só neste celular.</p>`}</div></details>
