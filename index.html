@@ -475,6 +475,18 @@ details.maisetp>summary::after{content:" ›"}details.maisetp[open]>summary::aft
 .papeis .opt.sexo{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 8px;color:var(--deep)}.papeis .opt.sexo span{font-size:.78rem;color:var(--soft)}
 .papeis .opt.sexo[aria-pressed="true"]{background:var(--deep);color:#fff;border-color:var(--deep)}.papeis .opt.sexo[aria-pressed="true"] span{color:#fff}
 .papeis .opt.nd{flex:1 1 100%;padding:8px 12px;font-size:.82rem}
+
+.mvid{display:flex;align-items:center;gap:12px;width:100%;margin-top:14px;padding:10px;border:0;border-radius:14px;background:rgba(0,0,0,.22);color:inherit;text-align:left;cursor:pointer;font:inherit}
+.mvid .th{flex:0 0 96px;aspect-ratio:16/9;border-radius:10px;background:linear-gradient(160deg,#2B5F5A,#0F2624);display:grid;place-items:center;position:relative}
+.mvid .th i{width:30px;height:30px;border-radius:50%;background:rgba(243,238,229,.92);display:grid;place-items:center}
+.mvid .th i:after{content:"";border-left:10px solid #1F4E4A;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:3px}
+.mvid .th em{position:absolute;right:5px;bottom:4px;font-style:normal;font-size:.6rem;background:rgba(0,0,0,.45);padding:1px 5px;border-radius:6px}
+.mvid .tx b{display:block;font-weight:700;font-size:.92rem}.mvid .tx span{font-size:.8rem;opacity:.8}
+.mvid.ok{padding:8px 10px;background:rgba(0,0,0,.14)}.mvid.ok .th{flex-basis:56px}.mvid.ok .th i{width:20px;height:20px}.mvid.ok .th i:after{border-left-width:7px;border-top-width:4px;border-bottom-width:4px;margin-left:2px}
+.vplayer{position:absolute;inset:0;background:#0E1312;z-index:60;display:flex;flex-direction:column;justify-content:center;padding:20px;color:#F3EEE5}
+.vplayer .fr{aspect-ratio:16/9;border-radius:14px;background:linear-gradient(160deg,#2B5F5A,#0F2624);display:grid;place-items:center}
+.vplayer .fr i{width:58px;height:58px;border-radius:50%;border:1.5px solid rgba(243,238,229,.8);display:grid;place-items:center}
+.vplayer .fr i:after{content:"";border-left:16px solid #F3EEE5;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
 </style>
 <style id="modo-app">
 .notes{display:none!important}
@@ -842,13 +854,13 @@ const R={
  },
  journey(){
   const troca=t=>`<button class="btn ghost comoesta" data-go="checkin">Como você está hoje? <span>Palavra de sabedoria e emoções ›</span></button>`;
-  const VB='<span class="vbtag">Vídeo do Mentor em breve</span>';
+  const VB='';
   if(tget()==='id'){
    const IF=idFeitos();let ni=[0,1,2].find(x=>!IF.includes(x));const allId=ni==null;if(allId)ni=0;const [it,ir]=ENC[ni];
    const igo=`data-go="encounter" data-track="id" data-enc="${ni}"`;
    view.innerHTML=`${saudHTML()}
    <h3 class="t jt">Minha jornada</h3>
-   <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div></div>
+   <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div>${vidCard('id-'+ni,'Estudo '+(ni+1)+' · '+it,'Sobre este estudo: '+it,3)}</div>
    ${(()=>{const eb=([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?(IF.includes(i)?'✓ Feito':i===ni?'Agora ›':'Abrir'):'Em breve'}</span></button>`;
     return `<div class="stack" style="margin-top:12px">${eb(ENC[ni],ni)}<details class="maisetp"><summary>Ver os ${ENC.length} estudos</summary><div class="stack" style="margin-top:8px">${ENC.map((e,i)=>i===ni?'':eb(e,i)).join('')}<p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div></details></div>`})()}
    ${ritmoHTML(null)}
@@ -867,7 +879,7 @@ const R={
   const etp=([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Etapa<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z} · ${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`};
   view.innerHTML=`${saudHTML(1)}
   <h3 class="t jt">Minha jornada</h3>
-  <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div></div>
+  <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div>${vidCard('cas-e1','Etapa 1 · A ideia foi de Deus','Sobre esta etapa: A ideia foi de Deus',3)}</div>
   <div class="stack" style="margin-top:12px">${etp(ETS[0],0)}
    <details class="maisetp"><summary>Ver as 8 etapas</summary><div class="stack" style="margin-top:8px">${ETS.slice(1).map((e,i)=>etp(e,i+1)).join('')}</div></details></div>
   ${ritmoHTML(passoHoje(d))}
@@ -1133,6 +1145,14 @@ function sheet(){
    <button class="btn ghost" data-go="support">Ver todo o apoio humano</button><button class="btn ghost" id="sx" style="border:0">Fechar</button></div></div>`);
   $('#sx').onclick=closeOverlays; $('#sb').onclick=e=>{if(e.target.id==='sb')closeOverlays()};
 }
+
+const VIDK=k=>'fvp-vid-'+k;
+function vidCard(k,tt,sub,min){let ok=false;try{ok=localStorage.getItem(VIDK(k))==='1'}catch(e){}
+ return ok?`<button class="mvid ok" data-vid="${k}" data-vt="${tt}"><span class="th"><i></i></span><span class="tx"><b>✓ Palavra do Mentor assistida</b><span>Rever ›</span></span></button>`
+ :`<button class="mvid" data-vid="${k}" data-vt="${tt}"><span class="th"><i></i><em>${min} min</em></span><span class="tx"><b>Uma palavra do Mentor</b><span>${sub}</span></span></button>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-vid]');if(!b)return;e.stopPropagation();
+ const k=b.dataset.vid;screen.insertAdjacentHTML('beforeend',`<div class="vplayer" id="vplayer" role="dialog" aria-label="Vídeo do Mentor"><div class="small" style="color:#E8C27A;letter-spacing:.12em;text-transform:uppercase;font-weight:700">Palavra do Mentor</div><h3 class="t" style="color:#F3EEE5;margin:6px 0 14px">${b.dataset.vt}</h3><div class="fr"><i></i></div><button class="btn" style="margin-top:18px" id="vclose">Fechar</button></div>`);
+ $('#vclose').onclick=()=>{try{localStorage.setItem(VIDK(k),'1')}catch(x){};$('#vplayer').remove();go('journey')}},true);
 function closeOverlays(){['#crisis','#sb'].forEach(s=>{const e=$(s);if(e)e.remove()})}
 
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g||g.getAttribute('aria-disabled')==='true')return;
