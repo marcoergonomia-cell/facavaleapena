@@ -509,6 +509,46 @@ details.maisetp .fe{display:none}details.maisetp[open] .fe{display:inline}detail
 .prox .vid .vtema{font-size:.88rem;opacity:.85;margin-top:4px;line-height:1.4}
 .prox .vid .vgo{align-self:flex-start;margin-top:10px;font-weight:700;font-size:.8rem;background:rgba(243,238,229,.95);color:#1F4E4A;padding:5px 12px;border-radius:999px}
 details.recomeco{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}details.recomeco>summary{cursor:pointer;font-size:.8rem;color:var(--soft);font-weight:600}
+
+.mod .prow2{display:flex;align-items:center;gap:10px}.mod .prow2 .prog{flex:1}.mod .prow2 .small{margin:0!important;white-space:nowrap;font-size:.74rem}
+.nomod{margin-top:10px;padding-top:6px}
+.mvid{flex-direction:column;align-items:stretch;gap:0;padding:0;margin-top:10px;overflow:hidden;background:rgba(0,0,0,.25)}
+.mvid .th{flex:none;width:100%;aspect-ratio:16/9;border-radius:0}
+.mvid .th i{width:46px;height:46px}.mvid .th i:after{border-left-width:17px;border-top-width:10px;border-bottom-width:10px;margin-left:5px}
+.mvid .th em{font-size:.72rem;right:10px;bottom:8px;padding:2px 8px}
+.mvid{position:relative}.mvid .th{aspect-ratio:16/7}.mvid .th i{margin-top:-46px;width:42px;height:42px}.mvid .tx{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.55))}.mvid .tx b{font-size:.98rem}.mvid .tx span{font-size:.78rem}.mvid .th em{top:8px;bottom:auto}
+.nomod .ritmo.topo .dias i{width:18px;height:18px}.nomod .ritmo.topo .dias i.hoje{width:22px;height:22px}.nomod .ritmo.topo .dias div{font-size:.52rem}
+.mvid.ok{flex-direction:row;align-items:center;padding:8px 10px;gap:10px}.mvid.ok .th{width:64px;border-radius:8px}.mvid.ok .tx{position:static;padding:0;background:none}.mvid.ok .th i{margin-top:0}
+.cortoggle{position:fixed;top:10px;right:10px;z-index:999;display:flex;gap:6px;background:#fff;padding:6px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.cortoggle button{border:0;border-radius:999px;padding:6px 12px;font:600 .8rem sans-serif;cursor:pointer;color:#fff}
+body.cor-verde .mod{background:linear-gradient(160deg,#1F4E4A,#163A37)}
+body.cor-verde .mvid .th{background:linear-gradient(160deg,#163A37,rgba(0,0,0,.55))}
+body.cor-creme .mod{background:linear-gradient(160deg,#F6E6CF,#EED7B8)}
+body.cor-creme .mvid .th{background:linear-gradient(160deg,#EED7B8,rgba(0,0,0,.55))}
+body.cor-tsuave .mod{background:linear-gradient(160deg,#EFCDB2,#E4B796)}
+body.cor-tsuave .mvid .th{background:linear-gradient(160deg,#E4B796,rgba(0,0,0,.55))}
+body.cor-creme .mod{color:#2E2620;border:1px solid rgba(0,0,0,.08)}
+body.cor-creme .mod .prog{background:rgba(0,0,0,.12)}
+body.cor-creme .nomod{border-top-color:rgba(0,0,0,.12)}
+body.cor-creme .nomod .ritmo.topo .dias div{color:rgba(0,0,0,.5)}
+body.cor-creme .nomod .ritmo.topo .dias div.hj{color:#1F4E4A}
+body.cor-creme .nomod .ritmo.topo .dias i{border-color:rgba(0,0,0,.25)}
+body.cor-creme .nomod .ritmo.topo .dias i.feito{background:#1F4E4A;border-color:#1F4E4A}
+body.cor-creme .nomod .ritmo.topo .dias i.feito::after{border-color:#fff}
+body.cor-creme .nomod .ritmo.topo .dias i.hoje{background-color:#fff;border-color:#B8862E}
+body.cor-creme .mvid .th{background:linear-gradient(160deg,#2B5F5A,#0F2624)}
+body.cor-creme .mvid{color:#F3EEE5}
+body.cor-tsuave .mod{color:#3A2216;border:1px solid rgba(0,0,0,.08)}
+body.cor-tsuave .mod .prog{background:rgba(0,0,0,.12)}
+body.cor-tsuave .nomod{border-top-color:rgba(0,0,0,.12)}
+body.cor-tsuave .nomod .ritmo.topo .dias div{color:rgba(0,0,0,.5)}
+body.cor-tsuave .nomod .ritmo.topo .dias div.hj{color:#6B3416}
+body.cor-tsuave .nomod .ritmo.topo .dias i{border-color:rgba(0,0,0,.25)}
+body.cor-tsuave .nomod .ritmo.topo .dias i.feito{background:#1F4E4A;border-color:#1F4E4A}
+body.cor-tsuave .nomod .ritmo.topo .dias i.feito::after{border-color:#fff}
+body.cor-tsuave .nomod .ritmo.topo .dias i.hoje{background-color:#fff;border-color:#B8862E}
+body.cor-tsuave .mvid .th{background:linear-gradient(160deg,#2B5F5A,#0F2624)}
+body.cor-tsuave .mvid{color:#F3EEE5}
 </style>
 <style id="modo-app">
 .notes{display:none!important}
@@ -1218,7 +1258,7 @@ $('#langTop').onclick=()=>{closeOverlays();
 applySeason();
 go('welcome');
 </script>
-
+<script>document.body.classList.add("cor-verde");</script>
 <script>
 if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
 </script>
