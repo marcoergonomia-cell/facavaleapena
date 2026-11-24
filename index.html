@@ -471,7 +471,8 @@ details.maisetp>summary::after{content:" ›"}details.maisetp[open]>summary::aft
 /* Dia de hoje no Seu ritmo: alianças (Casamento) e broto (Quem eu sou), 21/11 */
 .ritmo.r-cas .dias div.hj{color:var(--dawn)}.ritmo.r-cas .dias i.hoje{border:2px solid var(--dawn);background:#fff url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23B87C28%22%20stroke-width%3D%221.8%22%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2213%22%20r%3D%225.2%22/%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2213%22%20r%3D%225.2%22/%3E%3Cpath%20d%3D%22M13.6%205.6l1.4-1.8%201.4%201.8%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") center/22px no-repeat;width:32px;height:32px;margin-top:3px}
 .ritmo.r-id .dias div.hj{color:#3E7D4F}.ritmo.r-id .dias i.hoje{border:2px solid #3E7D4F;background:#fff url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%233E7D4F%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%2020v-8%22/%3E%3Cpath%20d%3D%22M12%2013c0-3.5-2.5-5.5-6-5.5%200%203.5%202.5%205.5%206%205.5z%22/%3E%3Cpath%20d%3D%22M12%2011c0-3.5%202.5-5.5%206-5.5%200%203.5-2.5%205.5-6%205.5z%22/%3E%3Cpath%20d%3D%22M8%2020h8%22/%3E%3C/svg%3E") center/22px no-repeat;width:32px;height:32px;margin-top:3px}
-.saud.lin button.meusdados{text-decoration:none;font:600 .8rem var(--body);color:var(--deep);background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+.saud.lin button.meusdados{text-decoration:none!important;font:600 .7rem var(--body)!important;color:var(--soft)!important;background:none;border:0;padding:0;opacity:.85}
+details.maisetp .fe{display:none}details.maisetp[open] .fe{display:inline}details.maisetp[open] .ab{display:none}
 .papeis .opt.sexo{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 8px;color:var(--deep)}.papeis .opt.sexo span{font-size:.78rem;color:var(--soft)}
 .papeis .opt.sexo[aria-pressed="true"]{background:var(--deep);color:#fff;border-color:var(--deep)}.papeis .opt.sexo[aria-pressed="true"] span{color:#fff}
 .papeis .opt.nd{flex:1 1 100%;padding:8px 12px;font-size:.82rem}
@@ -591,7 +592,7 @@ function filme(t){
   const fim=()=>{if(!el.isConnected||el.classList.contains('sai'))return;clearTimeout(tm);el.classList.add("sai");setTimeout(()=>el.remove(),1600)};
   const f1=el.querySelector('.f1'),f2=el.querySelector('.f2'),ce=el.querySelector('.cena'),bv=el.querySelector('.bv');[f2,ce,bv].forEach(x=>x.hidden=true);
   /* um passo por vez: 0 frase 1, 1 frase 2, 2 cena, 3 cena + boas-vindas */
-  const PASSOS=[[f1],[f2],[ce],[ce,bv]],DUR=[3800,3800,1800,3600];let i=-1,tm=null;
+  const PASSOS=[[f1],[f2],[ce],[ce,bv]],DUR=[3000,3000,1500,3000];let i=-1,tm=null;
   const passo=(n,toque)=>{clearTimeout(tm);if(n>=PASSOS.length){fim();return}
    const vis=PASSOS[n];
    /* quem sai: no toque some na hora; no automático apaga devagar e depois sai da tela */
@@ -862,7 +863,7 @@ const R={
    <h3 class="t jt">Minha jornada</h3>
    <div class="mod"><div class="k">Jornada da identidade</div><h4>Eu não sou um acidente</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 0">Você foi criado de propósito, para um propósito.</div>${vidCard('id-'+ni,'Estudo '+(ni+1)+' · '+it,'Sobre este estudo: '+it,3)}</div>
    ${(()=>{const eb=([t,r],i)=>`<button class="enc ${i<3?'':'locked'}" ${i<3?`data-go="encounter" data-track="id" data-enc="${i}"`:''} aria-disabled="${i>2}"><span class="n">${i+1}</span><span><span class="tt">${t}</span><br><span class="rf">${r}</span></span><span class="small">${i<3?(IF.includes(i)?'✓ Feito':i===ni?'Agora ›':'Abrir'):'Em breve'}</span></button>`;
-    return `<div class="stack" style="margin-top:12px">${eb(ENC[ni],ni)}<details class="maisetp"><summary>Ver os ${ENC.length} estudos</summary><div class="stack" style="margin-top:8px">${ENC.map((e,i)=>i===ni?'':eb(e,i)).join('')}<p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div></details></div>`})()}
+    return `<div class="stack" style="margin-top:12px">${eb(ENC[ni],ni)}<details class="maisetp" ${etAberto()}><summary><span class="ab">Ver os ${ENC.length} estudos</span><span class="fe">Recolher os estudos</span></summary><div class="stack" style="margin-top:8px">${ENC.map((e,i)=>i===ni?'':eb(e,i)).join('')}<p class="small" style="margin:4px 0 0">Mais estudos em breve.</p></div></details></div>`})()}
    ${ritmoHTML(null)}
    <div class="prox hojec"><div class="vid"><span class="vk">Estudo ${ni+1} de 3</span><span class="vt">${it}</span>${VB}</div>
     <div class="info"><p class="lead">${ir}</p><button class="btn" style="width:100%" ${igo}>Abrir o estudo</button></div></div>
@@ -881,7 +882,7 @@ const R={
   <h3 class="t jt">Minha jornada</h3>
   <div class="mod"><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Etapa 1 de 8</div>${vidCard('cas-e1','Etapa 1 · A ideia foi de Deus','Sobre esta etapa: A ideia foi de Deus',3)}</div>
   <div class="stack" style="margin-top:12px">${etp(ETS[0],0)}
-   <details class="maisetp"><summary>Ver as 8 etapas</summary><div class="stack" style="margin-top:8px">${ETS.slice(1).map((e,i)=>etp(e,i+1)).join('')}</div></details></div>
+   <details class="maisetp" ${etAberto()}><summary><span class="ab">Ver as 8 etapas</span><span class="fe">Recolher as etapas</span></summary><div class="stack" style="margin-top:8px">${ETS.slice(1).map((e,i)=>etp(e,i+1)).join('')}</div></details></div>
   ${ritmoHTML(passoHoje(d))}
   <div class="prox hojec"><div class="vid"><span class="vk">Hoje · Dia ${d} de 40</span><span class="vt">${DN[d].split(' · ')[1]||DN[d]}</span>${VB}</div>
    <div class="info">${d===1?`<p class="lead">Estudo · cerca de ${somaMin(PT)} min. Siga na ordem: cada tela prepara a próxima.</p><button class="btn" style="width:100%" ${open}>Começar o estudo</button>`:`<p class="lead">${DN[d].split(' · ')[0]} · cerca de ${somaMin(PT)} min. Toque numa parte, na ordem que quiser.</p>${prowsHTML(d)}`}</div></div>
@@ -1153,6 +1154,8 @@ function vidCard(k,tt,sub,min){let ok=false;try{ok=localStorage.getItem(VIDK(k))
 document.addEventListener('click',e=>{const b=e.target.closest('[data-vid]');if(!b)return;e.stopPropagation();
  const k=b.dataset.vid;screen.insertAdjacentHTML('beforeend',`<div class="vplayer" id="vplayer" role="dialog" aria-label="Vídeo do Mentor"><div class="small" style="color:#E8C27A;letter-spacing:.12em;text-transform:uppercase;font-weight:700">Palavra do Mentor</div><h3 class="t" style="color:#F3EEE5;margin:6px 0 14px">${b.dataset.vt}</h3><div class="fr"><i></i></div><button class="btn" style="margin-top:18px" id="vclose">Fechar</button></div>`);
  $('#vclose').onclick=()=>{try{localStorage.setItem(VIDK(k),'1')}catch(x){};$('#vplayer').remove();go('journey')}},true);
+const etAberto=()=>{let v=null;try{v=localStorage.getItem('fvp-etapas-fechado')}catch(e){}return v==='1'?'':'open'};
+document.addEventListener('toggle',e=>{const d=e.target;if(d.classList&&d.classList.contains('maisetp')){try{localStorage.setItem('fvp-etapas-fechado',d.open?'0':'1')}catch(x){}}},true);
 function closeOverlays(){['#crisis','#sb'].forEach(s=>{const e=$(s);if(e)e.remove()})}
 
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g||g.getAttribute('aria-disabled')==='true')return;
