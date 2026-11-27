@@ -1097,7 +1097,7 @@ const R={
   const all=F.length>=5;
   view.innerHTML=`<button class="btn ghost" data-go="journey" style="border:0;padding:6px 0;width:auto;font-weight:600">‹ Voltar aos 8 pilares</button>
   <div class="steplabel" style="margin-top:6px">Pilar 1 de 8 · Dias 1 a 5</div>
-  <h3 class="t" style="margin-top:4px">Origem</h3><p class="small" style="margin-top:-4px">Nosso casamento nasceu no coração de Deus.</p>
+  <h3 class="t" style="margin-top:4px">Origem</h3><p class="small" style="margin-top:-4px">Nosso casamento nasceu no coração de Deus.</p><p class="small" style="margin:4px 0 0"><b>Ao final, eu</b> compreendo que meu casamento nasceu no projeto de Deus e escolho construí-lo sobre esse fundamento.</p>
   <p style="margin:8px 0 4px">Um degrau por dia. ${all?'Você subiu os 5 degraus deste pilar.':'O degrau de hoje está aceso.'}</p>
   <div class="escada" role="list">${[1,2,3,4,5].map(x=>{const done=F.includes(x),now=!all&&x===d;const st=done?'feito':now?'hoje':'futuro';
    return `<button role="listitem" class="degrau ${st} ${x===lit?'acende':''}" style="--i:${x-1}" ${abreDia(x)} aria-label="Dia ${x}${done?', feito':now?', hoje':''}"><span class="dn">Dia ${x}</span><span class="dt">${DN[x].split(' · ')[1]}</span><span class="ds">${done?'✓ Feito':now?'Hoje':''}</span></button>`}).join('')}</div>
