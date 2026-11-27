@@ -16,6 +16,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
 <style>
+.casafim{background:#24453A;color:#F7F1E3;border-radius:18px;padding:18px 16px 16px;margin-top:8px;text-align:center}
+.casafim svg,.casaov svg{width:100%;height:auto;display:block}
+.cfk{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.cfh{font-family:Literata,Georgia,serif;font-size:1.25rem;margin:10px 0 6px;color:#F7F1E3}
+.cft{margin:0 auto;max-width:32ch;font-size:.95rem;line-height:1.45}
+.cfs{margin:8px 0 0;font-size:.8rem;opacity:.8}
+.cnovo{animation:casaSobe 1s cubic-bezier(.2,.8,.2,1) .4s both}.cteto{animation:casaSobe 1.3s cubic-bezier(.2,.8,.2,1) .8s both}
+@keyframes casaSobe{from{transform:translateY(-50px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.cnovo,.cteto{animation:none}}
+.casamini{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:10px 14px;border-radius:14px;border:1px solid var(--line,#ddd);background:var(--paper,#fff);color:inherit;font:inherit;text-align:left;cursor:pointer}
+.casamini svg{width:64px;height:auto;flex:none;background:#24453A;border-radius:8px;padding:3px}
+.cmt{flex:1;display:flex;flex-direction:column}.cmt b{font-size:.95rem}.cmt span{font-size:.8rem;opacity:.7}.cmv{font-weight:700;color:#2F6B4F;font-size:.85rem}
+.casaov{position:fixed;inset:0;z-index:200;background:#24453A;color:#F7F1E3;overflow:auto}
+.casaovin{max-width:460px;margin:0 auto;padding:20px 16px 40px;position:relative}
+.cox{position:absolute;right:12px;top:12px;border:0;background:rgba(255,255,255,.15);color:#F7F1E3;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer}
+.cop{background:rgba(255,255,255,.07);border-radius:12px;margin-top:8px;padding:10px 12px}
+.cop summary{display:flex;gap:10px;align-items:baseline;cursor:pointer;list-style:none}
+.cpn{font-size:.72rem;opacity:.7;width:48px;flex:none}.cpt{flex:1;font-weight:700}.cps{font-size:.78rem;opacity:.8}
+.cpf{margin:8px 0 4px;font-size:.85rem;opacity:.85}.cop ol{list-style:none;margin:0;padding:0}.cop li{font-size:.85rem;padding:5px 0;border-top:1px solid rgba(255,255,255,.1);opacity:.6}.cop li.ok{opacity:1}.cop li.ok b::before{content:"✓ "}
+.cop li b{display:inline-block;width:62px;font-size:.75rem}
+
 /* Layout: notas de design à esquerda, celular clicável à direita; no celular real, o protótipo ocupa a tela */
 :root{
   /* fundo padrão = creme do Outono (pedido do Marquinho, 21/11); botões continuam verdes */
@@ -834,6 +855,51 @@ function curioMsg(){const L=CURIO,d=new Date().toISOString().slice(0,10);let r={
 function sentMsg(m){const L=SENT[m];if(!L)return null;const d=new Date().toISOString().slice(0,10);let r={};try{r=JSON.parse(localStorage.getItem('fvp-sent-'+m)||'{}')}catch(e){}
   if(r.d!==d){r={d,i:r.d==null?0:((r.i??-1)+1)%L.length}}
   try{localStorage.setItem('fvp-sent-'+m,JSON.stringify(r))}catch(e){}return L[r.i%L.length]}
+const PIL=[
+ {n:"Origem",f:"Nosso casamento nasceu no coração de Deus.",g:"compreendo que meu casamento nasceu no projeto de Deus e escolho construí-lo sobre esse fundamento.",q:"De onde vem o casamento?",d:[
+  ["O casamento é uma ideia de Deus.","Gn 2.18",1],["Deixar: formar uma nova família.","Gn 2.24",0,1],["Unir-se: construir uma vida em comum.","Gn 2.24; Ec 4.9-10"],["Jesus se importa com o casamento.","Jo 2.1-11"],["Tornar-se uma só carne: unidade sem perder a individualidade.","Jo 15.5 (a videira)"]]},
+ {n:"Aliança",f:"Não somos um contrato, somos uma aliança.",g:"compreendo que fiz uma aliança diante de Deus e escolho a fidelidade nas pequenas coisas do dia a dia.",q:"Qual compromisso assumimos?",d:[
+  ["O significado de uma aliança.","Ml 2.14"],["Meu sim foi diante de Deus.","Mt 19.6"],["Fidelidade nas pequenas coisas.","Lc 16.10; Hb 13.4"],["Jesus permaneceu fiel até o fim.","Jo 13.1"],["Permanecer comprometido quando surgem dificuldades.","Rt 1.16-17"]]},
+ {n:"Prioridade e parceria",f:"Construímos uma vida juntos.",g:"coloco o casamento como prioridade e compartilho decisões, responsabilidades e projetos de vida.",q:"Como construímos uma vida juntos?",d:[
+  ["Nosso casamento precisa de prioridade.","Mt 6.21"],["Decidimos juntos, não competimos.","Am 3.3"],["Dinheiro, responsabilidades e planejamento.","Lc 14.28; Pv 21.5"],["Não disputar o primeiro lugar: o maior é quem serve.","Mc 10.42-45"],["Somos parceiros, não adversários.","Ec 4.9-10"]]},
+ {n:"Comunicação",f:"Aprendemos a falar e ouvir.",g:"dialogo com respeito, ouço com atenção e resolvo conflitos sem ferir a relação.",q:"Como aprendemos a nos relacionar?",d:[
+  ["Palavras que constroem ou destroem.","Pv 18.21; Ef 4.29"],["Ouvir para compreender, não apenas responder.","Tg 1.19"],["Como discordar sem ferir.","Pv 15.1; Ef 4.26"],["Verdade com graça.","Jo 1.14; Jo 4.7-26"],["Resolver conflitos sem transformar o cônjuge em inimigo.","Rm 12.18"]]},
+ {n:"Escolha e amor",f:"Escolho cultivar o nosso amor.",g:"transformo o amor em escolhas e atitudes diárias, do jeito que o outro entende.",q:"Como escolhemos cultivar nosso relacionamento?",d:[
+  ["Amar é uma decisão diária.","1Co 13.4-7"],["Lembrar por que eu disse sim.","1Jo 4.19"],["Conhecer as necessidades do outro (jeitos de amar).","Fp 2.3-4"],["Amar com atitudes e entrega.","1Jo 3.18; Jo 15.13"],["Pequenos gestos que mantêm o amor vivo (Tempo e cultivo, o bonsai).","Gn 2.15",1]]},
+ {n:"Intimidade",f:"Não basta dividir a casa, precisamos compartilhar a vida.",g:"cuido da conexão emocional, intelectual, espiritual e física, e não só de uma delas.",q:"Como aprofundamos nossa conexão?",d:[
+  ["As quatro dimensões da intimidade.","Ec 4.12"],["Intimidade emocional: compartilhar sentimentos.","Gl 6.2"],["Intimidade intelectual: compartilhar sonhos e ideias.","Pv 27.17"],["Jesus cultivava intimidade e comunhão com o Pai.","Lc 5.16; Mc 1.35"],["Intimidade física e sexualidade no casamento.","1Co 7.3-5"]]},
+ {n:"Perdão e restauração",f:"Não permitimos que os erros definam nossa história.",g:"reconheço meus erros, ofereço e recebo perdão e ajudo a reconstruir a confiança.",q:"Como enfrentamos erros e reconstruímos?",d:[
+  ["O modelo é o perdão de Cristo.","Cl 3.13"],["Reconhecer o erro e assumir responsabilidade.","Sl 32.5; Tg 5.16"],["Perdoar não é fingir que não doeu.","Ef 4.26, 32"],["Jesus restaurou Pedro sem humilhá-lo.","Jo 21.15-17"],["Reconstruir a confiança e aprender a recomeçar.","Fp 3.13-14"]]},
+ {n:"Propósito e serviço",f:"Nosso casamento vai além de nós dois.",g:"vivo o casamento como serviço e legado, com Deus no centro.",q:"Para que estamos construindo tudo isso?",d:[
+  ["Servir um ao outro.","Gl 5.13; Ef 5.21"],["Amor que se entrega e sabedoria que constrói.","Ef 5.25; Pv 14.1"],["Nosso casamento como testemunho e legado.","Sl 127.1; Mt 5.16"],["Jesus lavou os pés dos discípulos.","Jo 13.4-15"],["Com Deus no centro, construímos uma história que vale a pena.","Ec 4.12; Js 24.15"]]}
+];
+const CASA_T=PIL.flatMap(p=>p.d.map(x=>x[0]));
+function casaCount(){return Math.max(0,Math.min(40,feitos().length))}
+function casaSVG(n,anim,mini){
+ const X0=34,PW=26,GAP=(292-8*PW)/7,BH=27,BY=236;let g='';
+ g+=`<path d="M24 ${BY-5*BH-10} L180 30 L336 ${BY-5*BH-10} Z" fill="none" stroke="rgba(255,255,255,.3)" stroke-dasharray="4 4"/>`;
+ for(let p=0;p<8;p++){const x=X0+p*(PW+GAP);g+=`<rect x="${x}" y="${BY-5*BH}" width="${PW}" height="${5*BH}" rx="2" fill="rgba(255,255,255,.08)"/>`}
+ g+=`<rect x="16" y="${BY}" width="328" height="30" rx="3" fill="rgba(255,255,255,.2)"/>${mini?'':`<text x="180" y="${BY+19}" text-anchor="middle" font-size="11" font-weight="700" fill="#F7F1E3" font-family="inherit">Alicerce: Cristo · 1Co 3.11</text>`}`;
+ for(let p=0;p<8;p++){const x=X0+p*(PW+GAP);
+  if(n>=p*5+5){const nova=anim&&n===p*5+5;g+=`<g class="${nova?'cnovo':''}"><rect x="${x}" y="${BY-5*BH+1}" width="${PW}" height="${5*BH-2}" rx="2" fill="#E6D9BC"/>${mini?'':`<text transform="rotate(-90 ${x+PW/2} ${BY-2.5*BH})" x="${x+PW/2}" y="${BY-2.5*BH}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#24453A" font-family="inherit">${PIL[p].n}</text>`}</g>`;continue}
+  for(let b=0;b<5;b++){const d=p*5+b+1;if(d>n)break;g+=`<rect class="${anim&&d===n?'cnovo':''}" x="${x}" y="${BY-(b+1)*BH+1}" width="${PW}" height="${BH-2}" rx="1.5" fill="#F3EAD6" stroke="rgba(36,69,58,.25)" stroke-width=".8"/>`}}
+ if(n>=40)g+=`<g class="${anim?'cteto':''}"><rect x="20" y="${BY-5*BH-10}" width="320" height="10" fill="#E6D9BC"/><path d="M14 ${BY-5*BH-10} L180 30 L346 ${BY-5*BH-10} Z" fill="#F3EAD6"/>${mini?'':`<text x="180" y="${BY-5*BH-26}" text-anchor="middle" font-size="12" font-weight="700" fill="#24453A" font-family="inherit">Com Deus no centro</text>`}</g>`;
+ return `<svg viewBox="0 0 360 272" role="img" aria-label="Casa: ${n} de 40 blocos">${g}</svg>`;
+}
+function casaFimHTML(){
+ const n=casaCount();if(!n)return '';const p=Math.floor((n-1)/5),b=(n-1)%5;let h,t,sub;
+ if(n>=40){h='A casa está de pé.';t='40 dias. 8 pilares. 8 aprendizados. Uma construção para a vida inteira.';sub='A chuva vem para todas as casas. A diferença está no alicerce. Mt 7.24-27'}
+ else if(b===4){h=`Pilar ${p+1} completo: ${PIL[p].n}`;t=`Ao final, eu ${PIL[p].g}`;sub=`Amanhã começa o Pilar ${p+2}: ${PIL[p+1].n}.`}
+ else{h=`Mais um bloco no pilar ${PIL[p].n}`;t=CASA_T[n-1];sub=`Bloco ${b+1} de 5${b===3?' · Como Jesus fez':''}`}
+ return `<div class="casafim"><div class="cfk">Dia ${n} concluído</div>${casaSVG(n,true,false)}<h3 class="cfh">${h}</h3><p class="cft">${t}</p><p class="cfs">${sub}</p></div>`;
+}
+function casaMiniHTML(){const n=casaCount();return `<button class="casamini" type="button" onclick="casaAbrir()">${casaSVG(n,false,true)}<span class="cmt"><b>Minha casa</b><span>${n} de 40 blocos</span></span><span class="cmv">Ver ›</span></button>`}
+function casaAbrir(){
+ const n=casaCount();const ov=document.createElement('div');ov.className='casaov';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','Minha casa');
+ const pil=PIL.map((p,i)=>{const feitos=Math.max(0,Math.min(5,n-i*5));return `<details class="cop"${feitos>0&&feitos<5||(i===0&&n===0)?' open':''}><summary><span class="cpn">Pilar ${i+1}</span><span class="cpt">${p.n}</span><span class="cps">${feitos===5?'✓ Completo':feitos?feitos+' de 5':'—'}</span></summary><p class="cpf">${p.f}</p><ol>${p.d.map((d,k)=>`<li class="${i*5+k<n?'ok':''}"><b>Dia ${i*5+k+1}</b> ${d[0]}</li>`).join('')}</ol></details>`}).join('');
+ ov.innerHTML=`<div class="casaovin"><button class="cox" type="button" aria-label="Fechar">✕</button><div class="cfk">Minha casa</div><h3 class="cfh" style="margin-top:4px">${n} de 40 blocos</h3>${casaSVG(n,false,false)}<p class="cfs" style="margin:6px 0 16px">${n>=40?'A casa está de pé.':'Cada dia concluído levanta um bloco. Quem pula um dia não fica com buraco.'}</p>${pil}</div>`;
+ document.body.appendChild(ov);ov.querySelector('.cox').onclick=()=>ov.remove();
+}
 function feitos(){try{return JSON.parse(localStorage.getItem('fvp-feitos')||'[]')}catch(e){return []}}
 function markDone(d){ritmoMark();const F=feitos();if(F.includes(d))return;F.push(d);try{localStorage.setItem('fvp-feitos',JSON.stringify(F));localStorage.setItem('fvp-acender',String(d))}catch(e){}}
 /* Novidades 21/11: nome, ritmo, favoritos */
@@ -1027,7 +1093,7 @@ const R={
   const etp=([t,r],i)=>{const a=i*5+1,z=a+4,on=i===0;return `<button class="etp ${on?'now':'locked'}" ${on?'data-go="etapa"':'aria-disabled="true"'}><span class="eb">Pilar<b>${i+1}</b></span><span><span class="tt">${t}</span><br><span class="rf">Dias ${a} a ${z}<br>${r}</span></span><span class="small">${on?'Em andamento ›':'Em breve'}</span></button>`};
   view.innerHTML=`${ritmoTopo().replace('class="ritmo topo ',hojeGo(d,open)+' role="button" aria-label="Abrir o dia de hoje" class="ritmo topo semana ')}${saudHTML(1)}${atalhosHTML()}
   <h3 class="t jt">Minha jornada</h3>
-  <div class="mod"><button class="modgo" ${hojeGo(d,open)}><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Pilar 1 de 8</div></button><button class="hojego" ${hojeGo(d,open)}><span class="hk">${HKIND[d]||'Hoje'} · Dia ${d}</span><span class="ht">${DN[d].split(' · ')[1]||DN[d]}</span><span class="hc">Começar ›</span></button>${vidCard('cas-e1','Pilar 1 · Origem','Pilar 1 · Origem',3)}</div>
+  <div class="mod"><button class="modgo" ${hojeGo(d,open)}><div class="k">Trilha do casamento</div><h4>40 dias de jornada a dois</h4><div class="small" style="color:inherit;opacity:.85;margin:-4px 0 8px">Comece por você.</div><div class="prog"><b style="width:${d/40*100}%"></b></div><div class="small" style="color:inherit;opacity:.85;margin-top:6px">Dia ${d} de 40 · Pilar 1 de 8</div></button><button class="hojego" ${hojeGo(d,open)}><span class="hk">${HKIND[d]||'Hoje'} · Dia ${d}</span><span class="ht">${DN[d].split(' · ')[1]||DN[d]}</span><span class="hc">Começar ›</span></button>${vidCard('cas-e1','Pilar 1 · Origem','Pilar 1 · Origem',3)}</div>${casaMiniHTML()}
   <div class="stack" style="margin-top:12px">${etp(ETS[0],0)}
    <details class="maisetp" ${etAberto()}><summary><span class="ab">Ver os 8 pilares</span><span class="fe">Recolher os pilares</span></summary><div class="stack" style="margin-top:8px">${ETS.slice(1).map((e,i)=>etp(e,i+1)).join('')}</div></details></div>
   <div class="prox hojec2">${d>2?`<div class="info">${prowsHTML(d)}</div>`:''}${passoHTML(passoHoje(d))}</div>
@@ -1199,7 +1265,7 @@ function renderStep(){
   const cas=state.track==='cas', i=state.enc||0;
   const E=cas?CAS[i]:ENCS[i], N=E.screens.length+(E.noEnd?0:1), s=state.step; STEPS=Array(N);
   const name=cas?'Pilar 1 de 8 · Dia '+(i+1):'Estudo '+(i+1), dk=cas?'c1d'+(i+1):i;
-  if(s>=N){if(cas)markDone(i+1);else{ritmoMark();const IF=idFeitos();if(!IF.includes(i)){IF.push(i);lss('fvp-id-feitos',JSON.stringify(IF))}}view.innerHTML=`<div style="padding-top:56px;text-align:center"><svg width="64" height="24" viewBox="0 0 64 24" aria-hidden="true" style="display:block;margin:0 auto 22px"><path d="M2 18c10 0 12-12 30-12s20 12 30 12" fill="none" stroke="var(--dawn)" stroke-width="1.6" stroke-linecap="round"/></svg><div class="steplabel" style="color:var(--soft)">${name} · concluído</div><h3 class="t" style="margin-top:10px">Por hoje, é só isso.</h3><p class="sub" style="max-width:30ch;margin:8px auto 28px">${cas&&i===0?'Leve o seu gesto com você.':cas&&i===1?'Leve os seus quinze minutos com você.':'Leve a pergunta com você.'} ${cas?(i===0?'Amanhã a gente conversa sobre o tempo.':'Amanhã, uma palavra e um desafio de escrita.'):'Amanhã tem mais um passo.'}</p><div class="stack">${cas?`<button class="btn" ${abreDia(i+2)}>Ver o Dia ${i+2}</button>`:''}<button class="btn ${cas?'ghost':''}" data-go="${cas?'etapa':'journey'}">Ver minha jornada</button></div></div>`;return;}
+  if(s>=N){if(cas)markDone(i+1);else{ritmoMark();const IF=idFeitos();if(!IF.includes(i)){IF.push(i);lss('fvp-id-feitos',JSON.stringify(IF))}}view.innerHTML=(cas?casaFimHTML():'')+`<div style="padding-top:${cas?20:56}px;text-align:center">${cas?'':`<svg width="64" height="24" viewBox="0 0 64 24" aria-hidden="true" style="display:block;margin:0 auto 22px"><path d="M2 18c10 0 12-12 30-12s20 12 30 12" fill="none" stroke="var(--dawn)" stroke-width="1.6" stroke-linecap="round"/></svg>`}${cas?'':`<div class="steplabel" style="color:var(--soft)">${name} · concluído</div>`}<h3 class="t" style="margin-top:10px">Por hoje, é só isso.</h3><p class="sub" style="max-width:30ch;margin:8px auto 28px">${cas&&i===0?'Leve o seu gesto com você.':cas&&i===1?'Leve os seus quinze minutos com você.':'Leve a pergunta com você.'} ${cas?(i===0?'Amanhã: deixar, para formar uma nova família.':'Amanhã, uma palavra e um desafio de escrita.'):'Amanhã tem mais um passo.'}</p><div class="stack">${cas?`<button class="btn" ${abreDia(i+2)}>Ver o Dia ${i+2}</button>`:''}<button class="btn ${cas?'ghost':''}" data-go="${cas?'etapa':'journey'}">Ver minha jornada</button></div></div>`;return;}
   const head=`<div class="small" style="margin-top:4px">${name} · ${E.title}</div><div class="steps" data-estudo="1" style="grid-template-columns:repeat(${N},1fr)">${Array.from({length:N},(_,k)=>`<i class="${k<=s?'on':''}"${k<s?` data-volta="${k}" style="cursor:pointer"`:''}></i>`).join('')}</div>`;
   let body, next='Continuar';
   if(s<E.screens.length) body=E.screens[s]();
